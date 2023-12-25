@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="text-center">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h1 class="display-4">Welcome</h1>
+    <br />
+    <br />
+    <br />
+
+    @if (TempData["Message"] != null)
+    {
+        <p>@Html.Raw(TempData["Message"])</p>
+    }
+
+    <br />
+    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
+        <input type="file" name="Upload" required><br /><br />
+        <input type="text" name="Description" placeholder="Data description" required><br /><br />
+        <input type="text" name="Task" placeholder="Task" required><br /><br />
+        <input type="submit" value="Upload">
+    </form>
+
+</div>
+
+

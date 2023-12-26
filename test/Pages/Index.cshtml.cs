@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Globalization;
 using Python.Runtime;
 
+
 namespace test.Pages
 {
     public class IndexModel : PageModel
@@ -72,8 +73,8 @@ namespace test.Pages
                 python.SetVariable("json_file_path", jsonFilePath);
                 python.SetVariable("inputs", inputs);
 
-                // Run python script
-                var scriptPath = "path/to/script.py";
+                // run script
+                var scriptPath = "/Users/timzav/Desktop/test/im.py";
                 python.ExecuteFile(scriptPath);
 
 

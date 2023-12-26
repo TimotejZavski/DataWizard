@@ -13,4 +13,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="pythonnet" Version="3.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Python.Runtime">
+      <HintPath>..\..\..\.nuget\packages\pythonnet\3.0.3\lib\netstandard2.0\Python.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

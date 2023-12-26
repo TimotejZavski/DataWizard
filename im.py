@@ -1,10 +1,11 @@
+import os
 from openai import OpenAI
 import json
 import re # regular eskspresion za extract code v stringu
 import subprocess # za runnat script
 
-print('deluje')
-client = OpenAI(api_key="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")
+
+client = OpenAI(api_key="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")
 
 data_path = '/Users/timzav/Documents/SpletniPortalZaAnaliziranjeCSVDatotek/r-scripts/datasets/fast_food/BalajiFastFoodSales.json'
 explain_path = '/Users/timzav/Documents/SpletniPortalZaAnaliziranjeCSVDatotek/r-scripts/datasets/fast_food/explenation_food.txt'

@@ -19,6 +19,10 @@
     {
         <p>@Html.Raw(TempData["Message"])</p>
     }
+    @if (TempData["Message2"] != null)
+    {
+        <p>@Html.Raw(TempData["Message2"])</p>
+    }
 
     <br />
     <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">

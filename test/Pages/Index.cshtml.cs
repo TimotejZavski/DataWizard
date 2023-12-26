@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using CsvHelper;
 using Newtonsoft.Json;
 using System.Globalization;
-using Python.Runtime;
-
+using System.Diagnostics;
+using System.Net.Http.Json;
+using Newtonsoft.Json.Linq;
 
 namespace test.Pages
 {
@@ -37,7 +38,7 @@ namespace test.Pages
 
         public async Task<IActionResult> OnPostUploadFileAsync()
         {
-// Upload
+            // Upload
             if (Upload != null && Upload.Length > 0)
             {
 
@@ -50,7 +51,7 @@ namespace test.Pages
 
                 TempData["Message"] = "<span style='color: #30db5b;'>SUCCESS:</span> File, description, and task Uploaded!";
 
-         // Convert CSV to JSON
+                // Convert CSV to JSON
                 var csvFilePath = filePath;  // Assuming Uploaded file is a CSV
                 var jsonFilePath = Path.ChangeExtension(filePath, ".json");  // Change extension to .json
 
@@ -66,19 +67,63 @@ namespace test.Pages
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
 
-                string inputs = $"Description: {Description}, Task: {Task}";
+         //description
+                   
 
-                var python = Python.CreateRuntime();
+                    //data extraction
+                    string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
+                    JArray jsonArray = JArray.Parse(jsonFileContent);
 
-                python.SetVariable("json_file_path", jsonFilePath);
-                python.SetVariable("inputs", inputs);
+                    if (jsonArray.Count > 0)
+                    {
+                        string firstObjectString = jsonArray[0].ToString();
+                        string inputs = $"Description:'{Description}', Task:'{Task}', Data Path:'{jsonFilePath}', Data example:'{firstObjectString}'";
 
-                // run script
-                var scriptPath = "/Users/timzav/Desktop/test/im.py";
-                python.ExecuteFile(scriptPath);
+                    //run script
+                    string pythonScriptPath = "/Users/timzav/Desktop/test/print.py";
+
+
+                    // Create process start info
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = "/Users/timzav/miniconda3/bin/python",  // Replace with the path to your Python interpreter if it's not in the system PATH
+                        Arguments = $"{pythonScriptPath} {inputs} {Task}",
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    // Start the process
+                    using (Process process = new Process { StartInfo = psi })
+                    {
+                        process.Start();
+
+                        // Read output and error streams
+                        string output = process.StandardOutput.ReadToEnd();
+                        string error = process.StandardError.ReadToEnd();
+
+                        // Wait for the process to finish
+                        process.WaitForExit();
+
+                        // Display output and error
+                        Console.WriteLine("Output:");
+                        Console.WriteLine(output);
+                        Console.WriteLine("Error:");
+                        Console.WriteLine(error);
+                        TempData["Message2"] = $"<p style='color: red;'>{output}<br />{error}</p>";
+                    }
+                    
+                }
+                else
+                    {
+                        Console.WriteLine("The JSON array is empty.");
+                    }
 
 
 
+                
+        // END run script
             }
             else
             {

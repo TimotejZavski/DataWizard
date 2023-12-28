@@ -77,7 +77,7 @@ namespace test.Pages
                     if (jsonArray.Count > 0)
                     {
                         string firstObjectString = jsonArray[0].ToString();
-                        string inputs = $"Description:'{Description}', Task:'{Task}', Data Path:'{jsonFilePath}', Data example:'{firstObjectString}'";
+                        string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";
 
                     //run script
                     string pythonScriptPath = "/Users/timzav/Desktop/test/print.py";
@@ -86,7 +86,7 @@ namespace test.Pages
                     // Create process start info
                     ProcessStartInfo psi = new ProcessStartInfo
                     {
-                        FileName = "/Users/timzav/miniconda3/bin/python",  // Replace with the path to your Python interpreter if it's not in the system PATH
+                        FileName = "/Users/timzav/miniconda3/bin/python",
                         Arguments = $"{pythonScriptPath} {inputs} {Task}",
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
@@ -99,19 +99,19 @@ namespace test.Pages
                     {
                         process.Start();
 
-                        // Read output and error streams
+                        //reading output and error streams
                         string output = process.StandardOutput.ReadToEnd();
                         string error = process.StandardError.ReadToEnd();
 
-                        // Wait for the process to finish
+                        //wait for the process to finish
                         process.WaitForExit();
 
-                        // Display output and error
+                        //output and error
                         Console.WriteLine("Output:");
                         Console.WriteLine(output);
                         Console.WriteLine("Error:");
                         Console.WriteLine(error);
-                        TempData["Message2"] = $"<p style='color: red;'>{output}<br />{error}</p>";
+                        TempData["Message2"] = $"<p style='color: blue;'>{output}</p><p style='color: red;'>{error}</p>";
                     }
                     
                 }

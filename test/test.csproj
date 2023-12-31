@@ -17,4 +17,8 @@
       <HintPath>..\..\..\.nuget\packages\pythonnet\3.0.3\lib\netstandard2.0\Python.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\uploads\Video_Games.csv" />
+    <Content Remove="wwwroot\uploads\Video_Games.json" />
+  </ItemGroup>
 </Project>

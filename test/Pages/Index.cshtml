@@ -2,36 +2,166 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    @using Newtonsoft.Json
 }
-<div class="text-center">
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
-    <h1 class="display-4">Welcome</h1>
-    <br />
-    <br />
-    <br />
-
-    @if (TempData["Message"] != null)
-    {
-        <p>@Html.Raw(TempData["Message"])</p>
-    }
-    @if (TempData["Message2"] != null)
-    {
-        <p>@Html.Raw(TempData["Message2"])</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body{
+        height: 150vh;
     }
 
-    <br />
-    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
-        <input type="file" name="Upload" required><br /><br />
-        <input type="text" name="Description" placeholder="Data description" required><br /><br />
-        <input type="text" name="Task" placeholder="Task" required><br /><br />
-        <input type="submit" value="Upload">
-    </form>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
 
-</div>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1200px;
+        margin-block: 2rem;
+        gap: 2rem;
+    }
+
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: clamp(20rem, calc(20rem + 2vw), 22rem);
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #ECE9E6;
+    }
+
+
+
+    .card__body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+        .card__body h4 {
+            font-size: 1.5rem;
+            text-transform: capitalize;
+        }
+
+    .card__footer {
+        display: flex;
+        padding: 1rem;
+        margin-top: auto;
+    }
+    .card_table {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #ECE9E6;
+    }
+    textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    textarea::placeholder {
+        color: #999; 
+        font-style: italic;
+    }
+</style>
+
+<br />
+<br />
+
+<br />
+<form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
+    <div>
+        <div class="container">
+            <div class="card">
+                <div class="card__header">
+
+                </div>
+                <div class="card__body">
+                    <span class="tag tag-blue"><i class="fa fa-upload"></i> Upload</span>
+                    <h4>Upload your .CSV file</h4>
+                    <input type="file" name="Upload" required><br /><br />
+                </div>
+
+            </div>
+            <div class="card">
+
+                <div class="card__body">
+                    <span class="tag tag-brown"><i class="fa fa-fighter-jet"></i> Instructions</span>
+                    <h4>Description & Task</h4>
+                    <label>Description:</label>
+                    <textarea name="Description" placeholder="Detailed description of data inside .csv.
+ex.
+1. column: description
+2. column: description
+Something data in 2_column is missing. Use actual column names and not like example." rows="8" required></textarea>
+                    <label>Task:</label>
+                    <textarea name="Task" placeholder="ex. Create bar and violin chart showing male/female ratio." rows="3" required></textarea>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card__body">
+                    <span class="tag tag-red"><i style="font-size:20px" class="fa">&#xf29d; </i> Status</span>
+                    <h4>Current status of halucination</h4>
+                    @if (TempData["Message"] != null || TempData["Message2"] != null)
+                    {
+                        <p>@Html.Raw(TempData["Message"])</p>
+                        <p>@Html.Raw(TempData["Message2"])</p>
+                    }
+                </div>
+            </div>
+            <input type="submit" value="Upload" style="padding: 10px 20px; font-size: 16px; font-weight: bold; background-color: #4CAF50; /* Green */ color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+
+        </div>
+</form>
+
+
+@if (TempData["Message"] != null)
+    {
+        var json = TempData["JsonData"] as string;
+        var data = JsonConvert.DeserializeObject<List<dynamic>>(json);
+            <h2>Content of file (sample):</h2>
+    <div class="card_table" style="width: clamp(25rem, calc(20rem + 2vw));">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        @foreach (var property in data[0].Properties())
+                        {
+                            <th>@property.Name</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in data)
+                    {
+                        <tr>
+                            @foreach (var property in item.Properties())
+                            {
+                                <td>@property.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+    </div>
+          
+
+    }
 
 

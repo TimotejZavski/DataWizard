@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using Newtonsoft.Json.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace test.Pages
 {
@@ -26,9 +27,7 @@ namespace test.Pages
         }
 
         public void OnGet()
-        {
-            // Your existing code for the GET request
-            
+        {  
         }
         [BindProperty]
         public string Description { get; set; }
@@ -38,10 +37,9 @@ namespace test.Pages
 
         public async Task<IActionResult> OnPostUploadFileAsync()
         {
-            // Upload
             if (Upload != null && Upload.Length > 0)
             {
-
+                TempData["Message"] = "<span style='color: #30db5b;'>Uploaded:</span> File, description, and task Uploaded!</ br>";
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -49,7 +47,7 @@ namespace test.Pages
                     await Upload.CopyToAsync(stream);
                 }
 
-                TempData["Message"] = "<span style='color: #30db5b;'>SUCCESS:</span> File, description, and task Uploaded!";
+                
 
                 // Convert CSV to JSON
                 var csvFilePath = filePath;  // Assuming Uploaded file is a CSV
@@ -67,8 +65,6 @@ namespace test.Pages
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
 
-         //description
-                   
 
                     //data extraction
                     string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
@@ -77,7 +73,14 @@ namespace test.Pages
                     if (jsonArray.Count > 0)
                     {
                         string firstObjectString = jsonArray[0].ToString();
-                        string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";
+                        string secondObjectString = jsonArray[1].ToString();
+                    string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//description
+                    string jsonString = $"[\n{firstObjectString},\n{secondObjectString}\n]";
+
+                    //prikaz tabele
+                    TempData["JsonData"] = jsonString;
+
+
 
                     //run script
                     string pythonScriptPath = "/Users/timzav/Desktop/test/print.py";
@@ -99,19 +102,17 @@ namespace test.Pages
                     {
                         process.Start();
 
+                        string error;
                         //reading output and error streams
                         string output = process.StandardOutput.ReadToEnd();
-                        string error = process.StandardError.ReadToEnd();
+                        error = process.StandardError.ReadToEnd();
+                        process.WaitForExit();//wait for the process to finish
+                        if (string.IsNullOrEmpty(error))
+                        {
+                            error = " none";
+                        }
+                        TempData["Message2"] = $"<p><span style='color: #30db5b;'>success: </span>{output}</br><span style='color: #ff6961;'>error:</span>{error}</p>";
 
-                        //wait for the process to finish
-                        process.WaitForExit();
-
-                        //output and error
-                        Console.WriteLine("Output:");
-                        Console.WriteLine(output);
-                        Console.WriteLine("Error:");
-                        Console.WriteLine(error);
-                        TempData["Message2"] = $"<p style='color: blue;'>{output}</p><p style='color: red;'>{error}</p>";
                     }
                     
                 }
@@ -133,5 +134,8 @@ namespace test.Pages
             // Redirect back to the index page after the file is uploaded
             return RedirectToPage("/Index");
         }
+
+
     }
+
 }

@@ -13,22 +13,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-
+        //builder.Services.Configure<KestrelServerOptions>(options =>
+        //{
+        //    options.Limits.MaxRequestBodySize = null;
+        //});
 
         // Add services to the container.
         builder.Services.AddRazorPages();
-
-
-        builder.Services.Configure<IISServerOptions>(options =>
-        {
-            options.MaxRequestBodySize = null;
-        });
-
-        builder.Services.Configure<KestrelServerOptions>(options =>
-        {
-            options.Limits.MaxRequestBodySize = null;
-        });
-
 
         var app = builder.Build();
 

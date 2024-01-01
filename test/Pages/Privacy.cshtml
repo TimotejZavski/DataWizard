@@ -4,117 +4,14 @@
     ViewData["Title"] = "Home page";
     @using Newtonsoft.Json
 }
-<style>
-    body {
-        height: 200vh;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
 
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
-    }
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        max-width: 1200px;
-        margin-block: 2rem;
-        gap: 2rem;
-    }
+<h2>Image Gallery</h2>
 
-    .card {
-        display: flex;
-        flex-direction: column;
-        width: clamp(20rem, calc(20rem + 2vw), 22rem);
-        overflow: hidden;
-        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
-        border-radius: 1em;
-        background: #ECE9E6;
-        margin-bottom: 1rem; /* Add margin between cards */
-    }
-
-    .card__body {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-    }
-
-        .card__body h4 {
-            font-size: 1.5rem;
-            text-transform: capitalize;
-            margin-bottom: 0.5rem; /* Add margin below h4 */
+<div>
+    @foreach (var image in Model.Images)
+        {
+        <img src="@Url.Content(image.FilePath)" alt="Image" width="800" height="600" style="object-fit: cover;"/>
         }
+</div>
 
-    .card_table {
-        display: flex;
-        flex-direction: column;
-        width: auto;
-        overflow: hidden;
-        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
-        border-radius: 1em;
-        background: #ECE9E6;
-        margin-bottom: 1rem; /* Add margin below table */
-    }
-
-    .button {
-        padding: 10px 20px;
-        font-size: 16px;
-        font-weight: bold;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-    textarea {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-</style>
-
-<br />
-
-<form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
-    <div class="container">
-        <div class="card">
-            <div class="card__body">
-                <span class="tag tag-brown">Instructions</span>
-                <h4>Description & Task</h4>
-                <label>Description:</label>
-                <textarea name="Description" placeholder="Detailed description of data inside .csv.
-ex.
-1_column1: description
-2_column: description
-Something data in 2_column is missing. Use actual column names and not like example." rows="8" required></textarea>
-                <label>Task:</label>
-                <textarea name="Task" placeholder="ex. Create bar and violin chart showing male/female ratio." rows="3" required></textarea>
-            </div>
-        </div>
-        <div class="card">
-            <!-- ... card content ... -->
-        </div>
-        <div class="card">
-            <!-- ... card content ... -->
-        </div>
-        <input type="submit" value="Upload" class="button">
-    </div>
-</form>
-
-@if (TempData["Message"] != null)
-{
-    <!-- ... display table ... -->
-}

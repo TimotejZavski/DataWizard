@@ -5,7 +5,7 @@ import subprocess # za runnat script
 import sys #variable pass
 import os
 
-client = OpenAI(api_key="-h0osvELIS6E9NT3XddcXT3BlbkFJQlfaTOxI2wjfep80lVbV")
+client = OpenAI(api_key="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")
 p_file_Path = "/Users/timzav/Desktop/test/tplot.py"
 
 if len(sys.argv) > 1:#dobivanje iz c#

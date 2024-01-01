@@ -1,13 +1,34 @@
-﻿namespace test;
+﻿using Microsoft.AspNetCore.Hosting;
+using System.Reflection.PortableExecutable;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+namespace test;
+
 
 public class Program
 {
+
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
+
+
         // Add services to the container.
         builder.Services.AddRazorPages();
+
+
+        builder.Services.Configure<IISServerOptions>(options =>
+        {
+            options.MaxRequestBodySize = null;
+        });
+
+        builder.Services.Configure<KestrelServerOptions>(options =>
+        {
+            options.Limits.MaxRequestBodySize = null;
+        });
+
 
         var app = builder.Build();
 
@@ -30,5 +51,8 @@ public class Program
 
         app.Run();
     }
+
+  
 }
+
 

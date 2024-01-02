@@ -5,7 +5,7 @@ import subprocess # za runnat script
 import sys #variable pass
 import os
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="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")
 p_file_Path = "/Users/timzav/Desktop/test/tplot.py"
 
 if len(sys.argv) > 1:#dobivanje iz c#
@@ -14,7 +14,7 @@ if len(sys.argv) > 1:#dobivanje iz c#
 
     context = f"""
 You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments.
-Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/p_images/'.
+Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/images/'.
     """
 
 def count_tokens(input_string, token_length=4):
@@ -102,5 +102,4 @@ while True:
         print(f"F:'{st}'.Execution failed after 3 tryes.")
         break
         
-
 

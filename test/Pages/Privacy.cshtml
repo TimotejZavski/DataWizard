@@ -10,8 +10,12 @@
 
 <div>
     @foreach (var image in Model.Images)
-        {
-        <img src="@Url.Content(image.FilePath)" alt="Image" width="800" height="600" style="object-fit: cover;"/>
-        }
+    {
+        <img src="~/images/@image.FileName" alt="Image" width="800" height="600" style="object-fit: cover;" />
+    }
 </div>
 
+
+
+<hr>
+<hr>

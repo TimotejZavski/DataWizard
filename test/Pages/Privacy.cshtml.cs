@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using System.Linq;
+using System;
 
 namespace test.Pages
 {
     public class PrivacyModel : PageModel
     {
-        public string[] ImageUrls { get; private set; }
-
+        private readonly IWebHostEnvironment _environment;
         private readonly ILogger<PrivacyModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public PrivacyModel(IWebHostEnvironment environment, ILogger<PrivacyModel> logger)
         {
+            _environment = environment;
             _logger = logger;
         }
 
@@ -23,7 +23,7 @@ namespace test.Pages
 
         public void OnGet()
         {
-            string folderPath = "/Users/timzav/Desktop/test/test/wwwroot/p_images/"; // Change this to the path of your image folder
+            string folderPath = Path.Combine(_environment.WebRootPath, "images"); // Combine with the web root path
             Images = GetImagesFromFolder(folderPath);
         }
 
@@ -35,9 +35,11 @@ namespace test.Pages
             {
                 var imageFiles = Directory.GetFiles(folderPath, "*.png"); // Change the extension as needed
 
-                images.AddRange(imageFiles.Select(filePath => new ImageModel { FilePath = filePath }));
-
-
+                images.AddRange(imageFiles.Select(filePath =>
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    return new ImageModel { FileName = fileName };
+                }));
             }
 
             return images;

@@ -79,7 +79,8 @@ namespace test.Pages
                         string triObjectString = jsonArray[1].ToString();
                         string cetObjectString = jsonArray[1].ToString();
                         string petObjectString = jsonArray[1].ToString();
-                    string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//description
+
+                    string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//task mora bit locen zarad py strukture
                     string jsonString = $"[\n{firstObjectString},\n{secondObjectString},\n{triObjectString},\n{cetObjectString},\n{petObjectString}\n]";
 
                     //prikaz tabele
@@ -113,10 +114,12 @@ namespace test.Pages
                         string output = process.StandardOutput.ReadToEnd();
                         error = process.StandardError.ReadToEnd();
                         process.WaitForExit();//wait for the process to finish
-                        if (string.IsNullOrEmpty(error))
+                        /*if (string.IsNullOrEmpty(error))
                         {
                             error = "none (running proccess {generate py})";
-                        }
+                        }*/
+                        //nepotrebno
+                        
                         TempData["Message2"] = $"<p><span style='color: #30db5b;'>success: </span>{output}</br><span style='color: #ff6961;'>error:</span>{error}</p>";
 
                     }

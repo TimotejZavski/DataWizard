@@ -1,21 +1,20 @@
 from openai import OpenAI
-import json
+import json#za api not
 import re # regular eskspresion za extract code v stringu
 import subprocess # za runnat script
 import sys #variable pass
 import os
 
-client = OpenAI(api_key="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")
-p_file_Path = "/Users/timzav/Desktop/test/tplot.py"
+#api
+with open('/Users/timzav/Desktop/test/config.json') as f:
+    config = json.load(f)
+    kljuc = config['API_KEY']
+    client = OpenAI(api_key=kljuc)
 
-if len(sys.argv) > 1:#dobivanje iz c#
+#dobivanje iz c#
+if len(sys.argv) > 1:
     inputs = ' '.join(sys.argv[1:])
     Task = ' '.join(sys.argv[-1:])
-
-    context = f"""
-You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments.
-Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/images/'.
-    """
 
 def count_tokens(input_string, token_length=4):
     count = 0
@@ -39,8 +38,15 @@ def list_files_in_folder(folder_path):
     
     return file_names
 
+def pomozn():
+    file_names_list = list_files_in_folder(folder_path)
+    file_names_string = ' '.join(file_names_list)
+
+    return file_names_string
 
 folder_path = '/Users/timzav/Desktop/test/test/wwwroot/p_images/'
+context = f"""You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/images/'."""
+
 
 
 
@@ -64,42 +70,37 @@ while True:
         else:
             raise ValueError("No python code found in the input string")
         
-
+        p_file_Path = "/Users/timzav/Desktop/test/tplot.py"
         with open(p_file_Path, "w") as r_file:
             r_file.write(r_code)
 
         try:
             result = subprocess.run(['/Users/timzav/miniconda3/bin/python', p_file_Path], stderr=subprocess.PIPE, text=True)
 
-            # Check if there was an error
+            # Check za ERROR
             if result.returncode != 0:
                 error_message = result.stderr
                 print(f"Error in python script execution: {error_message}")
-                file_names_list = list_files_in_folder(folder_path)
-                file_names_string = ' '.join(file_names_list)
-                Task = f"{error_message} There are this many files already saved: {file_names_string}"
+                Task = f"{error_message} There are this many files already saved: {pomozn()}"
                 st = st + 1
 
             else:
-                print(f"Python script executed successfully. F:'{st}'")
+                print(f"Python script executed successfully. Tryes:'{st}'")
                 break
+            
         except subprocess.CalledProcessError as e:
             # Handle the case where the R script crashes
-            print(f"F:'{st}'.Python script crashed with error: '{e.stderr}'")
-            file_names_list = list_files_in_folder(folder_path)
-            file_names_string = ' '.join(file_names_list)
+            print(f"Tryes:'{st}'.Python script crashed with error: '{e.stderr}'")
             st = st + 1
-            Task = f"{e.stderr} 'there are this many files already saved: {file_names_string}"
+            Task = f"{e.stderr} 'there are this many files already saved: {pomozn()}"
         except Exception as e:
             # Handle other exceptions that might occur
-            print(f"F:'{st}'.An unexpected error occurred: '{e}'")
-            file_names_list = list_files_in_folder(folder_path)
-            file_names_string = ' '.join(file_names_list)
+            print(f"Tryes:'{st}'. An unexpected error occurred: '{e}'")
             st = st + 1
-            Task = f"{str(e)} + 'there are this many files already saved: {file_names_string}"
+            Task = f"{str(e)} + 'there are this many files already saved: {pomozn()}"
             
     else:
-        print(f"F:'{st}'.Execution failed after 3 tryes.")
+        print(f"Tryes:'{st}'. Gave up at 3rd try.")
         break
-        
+
 

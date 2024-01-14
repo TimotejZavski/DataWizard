@@ -70,16 +70,22 @@ namespace test.Pages
                     string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
                     JArray jsonArray = JArray.Parse(jsonFileContent);
 
+                    
                     if (jsonArray.Count > 0)
                     {
-                        string firstObjectString = jsonArray[0].ToString();
+                    //tabela
+                    string firstObjectString = jsonArray[0].ToString();
                         string secondObjectString = jsonArray[1].ToString();
+                        string triObjectString = jsonArray[1].ToString();
+                        string cetObjectString = jsonArray[1].ToString();
+                        string petObjectString = jsonArray[1].ToString();
                     string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//description
-                    string jsonString = $"[\n{firstObjectString},\n{secondObjectString}\n]";
+                    string jsonString = $"[\n{firstObjectString},\n{secondObjectString},\n{triObjectString},\n{cetObjectString},\n{petObjectString}\n]";
 
                     //prikaz tabele
                     TempData["JsonData"] = jsonString;
 
+                    TempData["Message45"] = $"<p><span style='color: #30db5b;'>success: </span>{inputs}</br></p>";
 
 
                     //run script
@@ -109,7 +115,7 @@ namespace test.Pages
                         process.WaitForExit();//wait for the process to finish
                         if (string.IsNullOrEmpty(error))
                         {
-                            error = " none";
+                            error = "none (running proccess {generate py})";
                         }
                         TempData["Message2"] = $"<p><span style='color: #30db5b;'>success: </span>{output}</br><span style='color: #ff6961;'>error:</span>{error}</p>";
 

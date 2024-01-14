@@ -18,6 +18,17 @@ public class Program
         //    options.Limits.MaxRequestBodySize = null;
         //});
 
+        //builder.WebHost.ConfigureKestrel(opt =>
+        //{
+        //    opt.Limits.MaxRequestBodySize = null;  //disable the request body limit.
+        //});
+
+        //builder.Services.Configure<FormOptions>(options =>
+        //{
+        //    options.ValueLengthLimit = int.MaxValue;
+        //    options.MultipartBodyLengthLimit = int.MaxValue;
+        //});
+
         // Add services to the container.
         builder.Services.AddRazorPages();
 

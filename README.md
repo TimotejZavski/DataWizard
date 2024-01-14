@@ -1,4 +1,4 @@
-config.json should look like this:
+create config.json, should look like this:
 
         {
             "API_KEY": "sk-..."

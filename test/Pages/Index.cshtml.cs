@@ -120,8 +120,8 @@ namespace test.Pages
                         }*/
                         //nepotrebno
                         
-                        TempData["Message2"] = $"<p><span style='color: #30db5b;'>Success: </span>{output}</br></p>";
-                        TempData["Message72"] = $"<p><span style='color: #ff6961;'>Error:</span>{error}</p>";
+                        TempData["Message2"] = $"<div class=\"alert fade_success .fade\"><strong>Success:</strong> {output}</div>";
+                        TempData["Message72"] = $"<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> {error}</div>";
 
                     }
 

@@ -91,7 +91,7 @@ while True:
                 st = st + 1
 
             else:
-                print(f"Python script executed successfully. Attempts:'{st}'")
+                print(f"Python script executed successfully in {st} attempt")
                 break
             #R2  
         except subprocess.CalledProcessError as e:

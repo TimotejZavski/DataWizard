@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
     inputs = ' '.join(sys.argv[1:])
     Task = ' '.join(sys.argv[-1:])
 
-"""manjka def tokens_in():"""
+"""manjka def tokens_in():"""#mora bit za not, ven in skupaj
 
 def tokens_out(input_string, token_length=4):
     count = 0
@@ -31,15 +31,10 @@ zacasen = ""# ce je napaka je to task
 
 def files_list(folder_path):
     file_names = []
-    
-    # Check if the folder path exists
     if os.path.exists(folder_path):
-        # Loop through all files in the folder
         for filename in os.listdir(folder_path):
-            # Check if it's a file (not a directory)
             if os.path.isfile(os.path.join(folder_path, filename)):
                 file_names.append(filename)
-    
     return file_names
 
 def skupek_imen():
@@ -49,12 +44,13 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/test/test/wwwroot/p_images/'
-context = f"You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/images/'. Images should be name after what tile of chart."
+context = f"You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. Given {inputs}, save resulting png images to '/Users/timzav/Desktop/test/test/wwwroot/images/'. Images should be name after what tile of chart. For collors use Monochromatic Blue Palette. Images will be showed on website with 'settings':width='800' height='600', make them high resolution, and clear, minimal."
 
 while True:
-    s_time = time.time()
+    
 
     if st <= 3:#3 krat lahka nardi napako
+        s_time = time.time()
         response = client.chat.completions.create(
             model="gpt-4-1106-preview", 
             messages=[
@@ -64,13 +60,15 @@ while True:
         )
         response = response.choices[0].message.content
 
-        #cas
+        #cas #imena so mela smisel - ne vec
+        """
         e_time = time.time()
-        r_time = e_time - s_time 
+        r_time = e_time - s_time
+        rounded_time_difference = round(r_time.total_seconds())
 
         token_count = tokens_out(response, token_length=4)
-        print(f"Number of tokens (received): {token_count}........... v {r_time} sekundah")
-
+        print(f"Number of tokens (received): {token_count}, v {r_time} sekundah\n")
+        """
         match = re.search(r"```(?:\bpython\b)?(.*?)```", response, re.DOTALL)
         if match:
             r_code = match.group(1)
@@ -109,12 +107,19 @@ while True:
     else:
         print(f"Attempts:'{st}'. Gave up at 3rd.sk:{skupek_imen()}")
         break
+     
+    
 
-#ciscenje
+#upload ciscenje-folder 
+    #safety
 folder_path = '/Users/timzav/Desktop/test/test/wwwroot/uploads/'
 if os.path.exists(folder_path):
     file_paths = glob.glob(os.path.join(folder_path, '*'))
     for file_path in file_paths:
         if os.path.isfile(file_path):
             os.remove(file_path)
+#varnostno
+#tplot ciscenje-datoteka
+with open(p_file_Path, 'w'):
+    pass
 

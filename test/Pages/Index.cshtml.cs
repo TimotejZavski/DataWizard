@@ -8,7 +8,6 @@ using CsvHelper;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Diagnostics;
-using System.Net.Http.Json;
 using Newtonsoft.Json.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -37,11 +36,15 @@ namespace test.Pages
 
         public async Task<IActionResult> OnPostUploadFileAsync()
         {
+            
             if (Upload != null && Upload.Length > 0)
-            {
-                TempData["Message"] = "<span style='color: #30db5b;'>Uploaded:</span> File, description, and task Uploaded!</ br>";
+            {   
+
+                TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
 
+
+                
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await Upload.CopyToAsync(stream);
@@ -86,9 +89,6 @@ namespace test.Pages
                     //prikaz tabele
                     TempData["JsonData"] = jsonString;
 
-                    TempData["Message45"] = $"<p><span style='color: #30db5b;'>success: </span>{inputs}</br></p>";
-
-
                     //run script
                     string pythonScriptPath = "/Users/timzav/Desktop/test/print.py";
 
@@ -120,14 +120,15 @@ namespace test.Pages
                         }*/
                         //nepotrebno
                         
-                        TempData["Message2"] = $"<p><span style='color: #30db5b;'>success: </span>{output}</br><span style='color: #ff6961;'>error:</span>{error}</p>";
+                        TempData["Message2"] = $"<p><span style='color: #30db5b;'>Success: </span>{output}</br></p>";
+                        TempData["Message72"] = $"<p><span style='color: #ff6961;'>Error:</span>{error}</p>";
 
                     }
-                    
+
                 }
                 else
                     {
-                        Console.WriteLine("The JSON array is empty.");
+                        Console.WriteLine("The JSON array is empty.");//zakaj je to tu
                     }
 
 
@@ -137,7 +138,9 @@ namespace test.Pages
             }
             else
             {
-                TempData["Message"] = "<span style='color: #ff6961;'>ERROR:</span>ERROR: File, description, or task not uploaded!";
+                
+
+                TempData["Message"] = "<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> File, description, or task not uploaded!</div>";
             }
 
             // Redirect back to the index page after the file is uploaded

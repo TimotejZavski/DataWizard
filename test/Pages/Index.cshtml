@@ -8,6 +8,7 @@
 <style>
     body {
         height: auto;
+        background: #e8f1ff;
     }
 
     *,
@@ -35,7 +36,7 @@
         overflow: hidden;
         box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
         border-radius: 1em;
-        background: #ECE9E6;
+        background: #fefffe;
     }
 
 
@@ -77,6 +78,25 @@
         textarea::placeholder {
             color: #999;
             font-style: italic;
+        }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    /* Success Fade Styles */
+    .fade_success {
+        background-color: #c9ffe5;
+        border: 1px solid #09c97f;
+    }
+
+        .fade_success strong {
+            color: #2f9172;
         }
 </style>
 
@@ -125,6 +145,7 @@ Something data in 2_column is missing. Use actual column names and not like exam
                 {
                     <p>@Html.Raw(TempData["Message"])</p>
                     <p>@Html.Raw(TempData["Message2"])</p>
+                    <p>@Html.Raw(TempData["Message72"])</p>    
                 }
             </div>
         </div>

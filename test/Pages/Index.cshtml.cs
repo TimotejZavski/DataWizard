@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
 
 namespace test.Pages
 {
@@ -34,20 +35,19 @@ namespace test.Pages
         [BindProperty]
         public string Task { get; set; }
 
+
+
         public async Task<IActionResult> OnPostUploadFileAsync()
         {
             
             if (Upload != null && Upload.Length > 0)
             {   
-
-                TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
 
-
-                
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await Upload.CopyToAsync(stream);
+                    
                 }
 
                 
@@ -67,6 +67,9 @@ namespace test.Pages
                     // Write JSON to file
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
+
+
+                TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
 
 
                     //data extraction
@@ -122,7 +125,6 @@ namespace test.Pages
                         
                         TempData["Message2"] = $"<div class=\"alert fade_success .fade\"><strong>Success:</strong> {output}</div>";
                         TempData["Message72"] = $"<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> {error}</div>";
-
                     }
 
                 }
@@ -138,13 +140,14 @@ namespace test.Pages
             }
             else
             {
-                
-
                 TempData["Message"] = "<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> File, description, or task not uploaded!</div>";
             }
 
             // Redirect back to the index page after the file is uploaded
             return RedirectToPage("/Index");
+
+
+
         }
 
 

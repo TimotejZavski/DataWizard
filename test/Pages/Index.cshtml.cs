@@ -68,12 +68,15 @@ namespace test.Pages
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
 
+                
+
 
                 TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
 
+                
 
-                    //data extraction
-                    string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
+                //data extraction
+                string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
                     JArray jsonArray = JArray.Parse(jsonFileContent);
 
                     

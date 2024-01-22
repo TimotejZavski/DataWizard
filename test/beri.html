@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css?v=NbTvFXWxY-2zfXfcmhbHF-Wb6BLSbCs8DIp1cMcy-0Q" />
+    <link rel="stylesheet" href="/test.styles.css?v=fRHAAmfNlPzk9Z2cBJxhuzoLsr57M2sIzSnGRLvskLs" />
+</head>
+
+<body>
+    <header>
+        <nav b-ps8s6hlvt4 class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-2">
+            <div b-ps8s6hlvt4 class="container">
+                <a class="navbar-brand" href="/">DataWizard</a>
+                <button b-ps8s6hlvt4 class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span b-ps8s6hlvt4 class="navbar-toggler-icon"></span>
+                </button>
+                <div b-ps8s6hlvt4 class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul b-ps8s6hlvt4 class="navbar-nav flex-grow-1">
+                        <li b-ps8s6hlvt4 class="nav-item">
+                            <a class="nav-link text-dark" href="/Privacy">Images</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div b-ps8s6hlvt4 class="container">
+        <main b-ps8s6hlvt4 role="main" class="pb-3">
+            
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body {
+        height: auto;
+        background: #e8f1ff;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1200px;
+        margin-block: 2rem;
+        gap: 2rem;
+    }
+
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: clamp(20rem, calc(20rem + 2vw), 22rem);
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #fefffe;
+    }
+
+
+
+    .card__body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+        .card__body h4 {
+            font-size: 1.5rem;
+            text-transform: capitalize;
+        }
+
+    .card__footer {
+        display: flex;
+        padding: 1rem;
+        margin-top: auto;
+    }
+
+    .card_table {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #ECE9E6;
+    }
+
+    textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+        textarea::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    /* Success Fade Styles */
+    .fade_success {
+        background-color: #c9ffe5;
+        border: 1px solid #09c97f;
+    }
+
+        .fade_success strong {
+            color: #2f9172;
+        }
+
+    .fade_error {
+        background-color: #ffdbdb;
+        border: 1px solid #f95668;
+    }
+
+        .fade_error strong {
+            color: #f95668;
+        }
+
+
+
+    .fade_warning {
+        background-color: #fff0cc;
+        border: 1px solid #f8b15d;
+    }
+
+        .fade_warning strong {
+            color: #f8b15d;
+        }
+</style>
+
+<br />
+<br />
+
+<br />
+<form method="post" enctype="multipart/form-data" action="/?handler=UploadFile">
+
+    <div class="container">
+        <div class="card">
+            <div class="card__header">
+
+            </div>
+            <div class="card__body">
+                <span class="tag tag-blue"><i class="fa fa-upload"></i> Upload</span>
+                <h4>Upload your .CSV file</h4>
+
+                <input type="file" name="Upload" required><br /><br />
+            </div>
+
+        </div>
+        <div class="card">
+
+            <div class="card__body">
+                <span class="tag tag-brown"><i class="fa fa-fighter-jet"></i> Instructions</span>
+                <h4>Description & Task</h4>
+                <label>Description:</label>
+                <textarea name="Description" placeholder="Detailed description of data inside .csv.
+ex.
+1. column: description
+2. column: description
+Something data in 2_column is missing. Use actual column names and not like example." rows="8" required></textarea>
+                <label>Task:</label>
+                <textarea name="Task" placeholder="ex. Create bar and violin chart showing male/female ratio." rows="3" required></textarea>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card__body">
+                <span class="tag tag-red"><i style="font-size:20px" class="fa">&#xf29d; </i> Status</span>
+                <h4>Status of halucination</h4>
+                <div class="alert fade_success .fade"><strong>Success:</strong> File, description, and task Uploaded!</div>
+            </div>
+        </div>
+        <input type="submit" value="Upload" style="padding: 10px 20px; font-size: 16px; font-weight: bold; background-color: #4CAF50; /* Green */ color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+
+    </div>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8JvLFTZFwdJKidr5b04Lul2qdPSZ6jhbIglpA9ap1srCWUeAKnWMFGVgyvvG_rQOSboZd64wAss23ExNYFyiDxo8q5AgTPjsNvRBZciV2YQPQDWTNsNBL-udT-SXLKn0cqR4hv1LKIVXxEI-fHCY_V4" /></form>
+    <br>
+    <br>
+    <br>
+
+
+
+        </main>
+    </div>
+    <br b-ps8s6hlvt4>
+    <br b-ps8s6hlvt4>
+    <br b-ps8s6hlvt4>
+    <footer b-ps8s6hlvt4 class="border-top footer text-muted" style="background: #f0f2f5;">
+        <div b-ps8s6hlvt4 class="container">
+                &copy; 2023 - Raca Property - <a onclick="return false;" href="">About</a>
+            </div>
+    </footer>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=ZuuafqFPrVRBKcjc9nVnUgldbE3hS3GG5WeZxe6SIR0"></script>
+
+    
+</body>
+</html>

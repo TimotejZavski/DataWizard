@@ -11,6 +11,8 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace test.Pages
 {
@@ -68,11 +70,23 @@ namespace test.Pages
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
 
-                
 
+
+
+
+                // /Users/timzav/Desktop/test/test/beri.html
 
                 TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
 
+                //
+                string htmlContent = System.IO.File.ReadAllText("/Users/timzav/Desktop/test/test/beri.html");
+
+
+                Response.ContentType = "text/html";
+                var page = Page();
+
+                Response.WriteAsync(Page());
+                
                 
 
                 //data extraction
@@ -147,9 +161,7 @@ namespace test.Pages
             }
 
             // Redirect back to the index page after the file is uploaded
-            return RedirectToPage("/Index");
-
-
+            return Page();
 
         }
 

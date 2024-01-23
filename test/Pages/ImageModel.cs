@@ -5,11 +5,9 @@ namespace test.Pages
     {
         public string FilePath { get; set; }
         public string FileName { get; internal set; }
-
         public ImageModel()
         {
-            FilePath = string.Empty; 
+            FilePath = string.Empty;
         }
     }
 }
-

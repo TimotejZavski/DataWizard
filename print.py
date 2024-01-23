@@ -59,7 +59,7 @@ while True:
         )
         response = response.choices[0].message.content
 
-        #cas #imena so mela smisel - ne vec
+        #cas #imena so mela smisel - ne vec - ponovno majo, cas ga nima
         """
         e_time = time.time()
         r_time = e_time - s_time

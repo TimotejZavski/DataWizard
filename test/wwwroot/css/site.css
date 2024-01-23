@@ -18,5 +18,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    height: auto;
+    background: #e8f1ff;
+    margin-bottom: 60px;
 }
+

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
+using WessleyMitchell.Web.DotNetCore.ViewRenderer;
 
 namespace test.Pages
 {
@@ -39,7 +40,7 @@ namespace test.Pages
 
         public async Task<IActionResult> OnPostUploadFileAsync()
         {
-            
+
             if (Upload != null && Upload.Length > 0)
             {   
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
@@ -47,10 +48,10 @@ namespace test.Pages
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await Upload.CopyToAsync(stream);
+                    TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
                     
                 }
 
-                
 
                 // Convert CSV to JSON
                 var csvFilePath = filePath;  // Assuming Uploaded file is a CSV
@@ -68,26 +69,19 @@ namespace test.Pages
                     System.IO.File.WriteAllText(jsonFilePath, json);
                 }
 
-                
-
-
-                TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
-
-                
-
                 //data extraction
                 string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
                     JArray jsonArray = JArray.Parse(jsonFileContent);
 
                     
-                    if (jsonArray.Count > 0)
+                if (jsonArray.Count > 0)
                     {
                     //tabela
                     string firstObjectString = jsonArray[0].ToString();
-                        string secondObjectString = jsonArray[1].ToString();
-                        string triObjectString = jsonArray[1].ToString();
-                        string cetObjectString = jsonArray[1].ToString();
-                        string petObjectString = jsonArray[1].ToString();
+                    string secondObjectString = jsonArray[1].ToString();
+                    string triObjectString = jsonArray[1].ToString();
+                    string cetObjectString = jsonArray[1].ToString();
+                    string petObjectString = jsonArray[1].ToString();
 
                     string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//task mora bit locen zarad py strukture
                     string jsonString = $"[\n{firstObjectString},\n{secondObjectString},\n{triObjectString},\n{cetObjectString},\n{petObjectString}\n]";
@@ -96,7 +90,7 @@ namespace test.Pages
                     TempData["JsonData"] = jsonString;
 
                     //run script
-                    string pythonScriptPath = "/Users/timzav/Desktop/test/print.py";
+                    string pythonScriptPath = "/Users/timzav/Desktop/DataWizard/print.py";
 
 
                     // Create process start info
@@ -137,8 +131,6 @@ namespace test.Pages
                     }
 
 
-
-                
         // END run script
             }
             else
@@ -148,8 +140,6 @@ namespace test.Pages
 
             // Redirect back to the index page after the file is uploaded
             return RedirectToPage("/Index");
-
-
 
         }
 

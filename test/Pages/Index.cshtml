@@ -49,12 +49,6 @@
             text-transform: capitalize;
         }
 
-    .card__footer {
-        display: flex;
-        padding: 1rem;
-        margin-top: auto;
-    }
-
     .card_table {
         display: flex;
         flex-direction: column;
@@ -124,9 +118,6 @@
 
     <div class="container">
         <div class="card">
-            <div class="card__header">
-
-            </div>
             <div class="card__body">
                 <span class="tag tag-blue"><i class="fa fa-upload"></i> Upload</span>
                 <h4>Upload your .CSV file</h4>
@@ -136,7 +127,6 @@
 
         </div>
         <div class="card">
-
             <div class="card__body">
                 <span class="tag tag-brown"><i class="fa fa-fighter-jet"></i> Instructions</span>
                 <h4>Description & Task</h4>
@@ -153,11 +143,10 @@ Something data in 2_column is missing. Use actual column names and not like exam
         </div>
 
         <div class="card">
-
             <div class="card__body">
                 <span class="tag tag-red"><i style="font-size:20px" class="fa">&#xf29d; </i> Status</span>
                 <h4>Status of halucination</h4>
-                @if (TempData["Message"] != null || TempData["Message2"] != null)
+                @if (TempData["Message"] != null || TempData["Message2"] != null || TempData["Message72"] != null)
                 {
                     <p>@Html.Raw(TempData["Message"])</p>
                     <p>@Html.Raw(TempData["Message2"])</p>
@@ -165,7 +154,7 @@ Something data in 2_column is missing. Use actual column names and not like exam
                 }
             </div>
         </div>
-        <input type="submit" value="Upload" style="padding: 10px 20px; font-size: 16px; font-weight: bold; background-color: #4CAF50; /* Green */ color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+        <input type="submit" value="Cast the Spell" style="padding: 10px 20px; font-size: 16px; font-weight: bold; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
 
     </div>
     @if (TempData["Message"] != null)

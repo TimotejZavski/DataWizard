@@ -83,8 +83,9 @@ namespace test.Pages
                     string cetObjectString = jsonArray[1].ToString();
                     string petObjectString = jsonArray[1].ToString();
 
-                    string inputs = $"Data example:'{firstObjectString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//task mora bit locen zarad py strukture
                     string jsonString = $"[\n{firstObjectString},\n{secondObjectString},\n{triObjectString},\n{cetObjectString},\n{petObjectString}\n]";
+                    string inputs = $"Data example:'{jsonString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//task mora bit locen zarad py strukture
+
 
                     //prikaz tabele
                     TempData["JsonData"] = jsonString;
@@ -94,7 +95,7 @@ namespace test.Pages
 
 
                     // Create process start info
-                    ProcessStartInfo psi = new ProcessStartInfo
+                    ProcessStartInfo psi = new()
                     {
                         FileName = "/Users/timzav/miniconda3/bin/python",
                         Arguments = $"{pythonScriptPath} {inputs} {Task}",
@@ -105,24 +106,23 @@ namespace test.Pages
                     };
 
                     // Start the process
-                    using (Process process = new Process { StartInfo = psi })
-                    {
-                        process.Start();
+                    using Process process = new()
+                    { StartInfo = psi };
+                    process.Start();
 
-                        string error;
-                        //reading output and error streams
-                        string output = process.StandardOutput.ReadToEnd();
-                        error = process.StandardError.ReadToEnd();
-                        process.WaitForExit();//wait for the process to finish
-                        /*if (string.IsNullOrEmpty(error))
-                        {
-                            error = "none (running proccess {generate py})";
-                        }*/
-                        //nepotrebno
-                        
-                        TempData["Message2"] = $"<div class=\"alert fade_success .fade\"><strong>Success:</strong> {output}</div>";
-                        TempData["Message72"] = $"<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> {error}</div>";
-                    }
+                    string error;
+                    //reading output and error streams
+                    string output = process.StandardOutput.ReadToEnd();
+                    error = process.StandardError.ReadToEnd();
+                    process.WaitForExit();//wait for the process to finish
+                    /*if (string.IsNullOrEmpty(error))
+                    {
+                        error = "none (running proccess {generate py})";
+                    }*/
+                    //nepotrebno
+
+                    TempData["Message2"] = $"<div class=\"alert fade_success .fade\"><strong>Success:</strong> {output}</div>";
+                    TempData["Message72"] = $"<div class=\"alert fade_error .fade\"><strong>ERROR:</strong> {error}</div>";
 
                 }
                 else

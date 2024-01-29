@@ -14,21 +14,11 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        //builder.Services.Configure<KestrelServerOptions>(options =>
-        //{
-        //    options.Limits.MaxRequestBodySize = null;
-        //});
+        builder.Services.Configure<FormOptions>(options =>
+        {
+            options.MultipartBodyLengthLimit = 268435456; // Set the limit to 256 MB
+        });
 
-        //builder.WebHost.ConfigureKestrel(opt =>
-        //{
-        //    opt.Limits.MaxRequestBodySize = null;  //disable the request body limit.
-        //});
-
-        //builder.Services.Configure<FormOptions>(options =>
-        //{
-        //    options.ValueLengthLimit = int.MaxValue;
-        //    options.MultipartBodyLengthLimit = int.MaxValue;
-        //});
 
         // Add services to the container.
         builder.Services.AddRazorPages();
@@ -42,6 +32,7 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

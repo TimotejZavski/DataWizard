@@ -406,3 +406,4 @@ ASALocalRun/
 config.json
 *.png
 *.csv
+*.json

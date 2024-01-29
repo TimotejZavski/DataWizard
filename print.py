@@ -45,11 +45,16 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
-context = f"You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. Given {inputs}, save resulting png images to '{folder_path}'. Images should be name after what tile of chart. For collors use Monochromatic Blue Palette. Images will be showed on website with 'settings':width='800' height='600', make them high resolution, and clear, minimal."
+context = f"You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. If user request is not specific, given:^({inputs}^)based on data example 1. analyze the structure of the data 2.look for trends and patterns in the data 3. save resulting png images to '{folder_path}'. Images should be name after what tile of chart. For collors use Monochromatic Blue Palette. Images will be showed on website with 'settings':width='800' height='600', make them high resolution, and clear, minimal."
+
+def zacasno():
+    st = "<div>TO JE ZNOTRAJ DIVA</div>"
+    return st
+
 
 while True:
     if st <= 4:#3 krat lahka nardi napako
-        s_time = time.time()
+        #s_time = time.time()
         response = client.chat.completions.create(
             model="gpt-4-1106-preview", 
             messages=[
@@ -75,8 +80,9 @@ while True:
         if match:
             r_code = match.group(1)
         else:
-            raise ValueError("No python code found in the input string")
+            raise ValueError(f"No python code found in the input string{response}")
         
+        #zapis kode
         p_file_Path = "/Users/timzav/Desktop/DataWizard/tplot.py"
         with open(p_file_Path, "w") as r_file:
             r_file.write(r_code)
@@ -89,7 +95,7 @@ while True:
             if result.returncode != 0:
                 error_message = result.stderr
                 print(f"R1:{skupek_imen}")#Error in python script execution: {error_message}
-                Task = f"'{str(e)}' + ', there are this many files already saved:'{skupek_imen()}', generate code for only the rest of images that didn't get to be created"
+                Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
                 st = st + 1
 
             else:
@@ -99,19 +105,19 @@ while True:
         except subprocess.CalledProcessError as e:
             print(f"R2:{skupek_imen}")#Tryes:'{st}'.Python script crashed with error: '{e.stderr}'
             st = st + 1
-            Task = f"'{str(e)}' + ', there are this many files already saved:'{skupek_imen()}', generate code for only the rest of images that didn't get to be created by this code:'{response}'"
+            Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
             #R3
         except Exception as e:
             print(f"R3:{skupek_imen}")#f"Tryes:'{st}'. An unexpected error occurred: '{e}'
             st = st + 1
-            Task = f"'{str(e)}' + ', there are this many files already saved:'{skupek_imen()}', generate code for only the rest of images that didn't get to be created by this code:'{response}'"
+            Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
             
     else:
 
         print(f"Attempts:'{st}'. Gave up at 4rd. imena\n:{skupek_imen()}")
         break
      
-    
+
 
 #upload ciscenje-folder 
     #safety
@@ -123,6 +129,6 @@ if os.path.exists(folder_path):
             os.remove(file_path)
 #varnostno
 #tplot ciscenje-datoteka
-with open(p_file_Path, 'w'):
-    pass
+#with open(p_file_Path, 'w'):
+ #   pass
 

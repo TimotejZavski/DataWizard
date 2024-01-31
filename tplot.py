@@ -1,38 +1,57 @@
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-from matplotlib.ticker import MaxNLocator
+import matplotlib.pyplot as plt
+from pathlib import Path
 
-# Load the data
-file_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/uploads/banklist.json'
-bank_data = pd.read_json(file_path)
+# Read data from JSON file
+data_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/uploads/Indian Liver Patient Dataset (ILPD).json'
+data = pd.read_json(data_path)
 
-# Convert closing dates to datetime and extract the year
-bank_data['Closing Date'] = pd.to_datetime(bank_data['Closing Date'])
-bank_data['Year Closed'] = bank_data['Closing Date'].dt.year
+# Ensure the output directory exists
+output_dir_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
+Path(output_dir_path).mkdir(parents=True, exist_ok=True)
 
-# Filter data for years after 2012
-bank_data_after_2012 = bank_data[bank_data['Year Closed'] >= 2012]
+# Set plot aesthetics
+sns.set(style="whitegrid", palette=sns.color_palette("Blues_r"))
+plt.rcParams.update({'figure.autolayout': True, 'figure.figsize': (8, 6), 'figure.dpi': 300})
 
-# Count the number of banks closed each year
-bank_closures_per_year = bank_data_after_2012['Year Closed'].value_counts().sort_index()
+# Helper function to save plots
+def save_figure(figure, title):
+    filename = title.replace(" ", "_")
+    figure.savefig(f"{output_dir_path}{filename}.png", bbox_inches='tight', dpi=300)
 
-# Plotting
-plt.figure(figsize=(8, 6), dpi=150)
-ax = sns.barplot(x=bank_closures_per_year.index.astype(str), y=bank_closures_per_year.values, palette="Blues_d")
+# Scatter plot of Alkphos vs Sgpt
+plt.figure()
+alkphos_sgpt_scatter = sns.scatterplot(x='Alkphos', y='Sgpt', data=data)
+alkphos_sgpt_scatter.set_title('Alkphos vs Sgpt')
+save_figure(alkphos_sgpt_scatter.get_figure(), 'Alkphos_vs_Sgpt')
+plt.close()
 
-# Set chart title and labels
-ax.set_title('Bank Closures by Year After 2012', fontsize=14, weight='bold')
-ax.set_xlabel('Year', fontsize=12)
-ax.set_ylabel('Number of Bank Closures', fontsize=12)
+# Boxplot of Alkphos by Gender
+plt.figure()
+alkphos_gender_boxplot = sns.boxplot(x='Gender', y='Alkphos', data=data)
+alkphos_gender_boxplot.set_title('Alkphos by Gender')
+save_figure(alkphos_gender_boxplot.get_figure(), 'Alkphos_by_Gender')
+plt.close()
 
-# Ensure x-axis only has integer ticks for years
-ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+# Distribution of Sgpt
+plt.figure()
+sgpt_distplot = sns.histplot(data['Sgpt'], kde=True)
+sgpt_distplot.set_title('Distribution of Sgpt')
+save_figure(sgpt_distplot.get_figure(), 'Distribution_of_Sgpt')
+plt.close()
 
-# Save the figure
-output_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/Bank_Closures_by_Year_After_2012.png'
-plt.savefig(output_path, bbox_inches='tight', format='png')
+# Line plot of Total Proteins by Age
+plt.figure()
+tp_age_lineplot = sns.lineplot(x='Age', y='TP', data=data, ci=None)
+tp_age_lineplot.set_title('Total Proteins by Age')
+save_figure(tp_age_lineplot.get_figure(), 'Total_Proteins_by_Age')
+plt.close()
 
-# Show plot (not required for saving image)
-# plt.show()
+# Scatter plot of Alkphos vs ALB
+plt.figure()
+alkphos_alb_scatter = sns.scatterplot(x='Alkphos', y='ALB', data=data)
+alkphos_alb_scatter.set_title('Alkphos vs ALB')
+save_figure(alkphos_alb_scatter.get_figure(), 'Alkphos_vs_ALB')
+plt.close()

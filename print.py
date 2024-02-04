@@ -129,6 +129,6 @@ if os.path.exists(folder_path):
             os.remove(file_path)
 #varnostno
 #tplot ciscenje-datoteka
-#with open(p_file_Path, 'w'):
- #   pass
+with open(p_file_Path, 'w'):
+   pass
 

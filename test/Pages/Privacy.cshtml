@@ -10,7 +10,28 @@
     body{
         text-align: center;
     }
+    .image-container {
+        position: relative;
+    }
 
+    .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+    }
+
+        .fullscreen img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 </style>
 
 <h2>Image Gallery</h2>
@@ -18,11 +39,37 @@
 <div>
     @foreach (var image in Model.Images)
     {
-        <img src="~/images/@image.FileName" alt="Image" width="800" height="600" style="object-fit: cover;" />
-        <hr>
+        <div class="image-container">
+            <img src="~/images/@image.FileName" alt="Image" width="960" height="540" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('@image.FileName')" />
+            <hr>
+        </div>
     }
-</div>
 
+</div>
+<script>
+    function openFullScreen() {
+        const imageContainer = document.querySelector('.image-container');
+        const image = imageContainer.querySelector('img');
+
+        const fullscreenContainer = document.createElement('div');
+        fullscreenContainer.classList.add('fullscreen');
+
+        const fullscreenImage = document.createElement('img');
+        fullscreenImage.src = image.src;
+        fullscreenImage.alt = image.alt;
+
+        fullscreenContainer.appendChild(fullscreenImage);
+        document.body.appendChild(fullscreenContainer);
+
+        fullscreenContainer.addEventListener('click', closeFullScreen);
+    }
+
+    function closeFullScreen() {
+        const fullscreenContainer = document.querySelector('.fullscreen');
+        fullscreenContainer.remove();
+    }
+
+</script>
 
 
 

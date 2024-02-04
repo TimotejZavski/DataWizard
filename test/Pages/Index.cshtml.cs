@@ -79,13 +79,13 @@ namespace test.Pages
                     //tabela
                     string firstObjectString = jsonArray[0].ToString();
                     string secondObjectString = jsonArray[1].ToString();
-                    string triObjectString = jsonArray[1].ToString();
-                    string cetObjectString = jsonArray[1].ToString();
-                    string petObjectString = jsonArray[1].ToString();
+                    //string triObjectString = jsonArray[1].ToString();
+                    //string cetObjectString = jsonArray[1].ToString();
+                    //string petObjectString = jsonArray[1].ToString();
 
-                    string jsonString = $"[\n{firstObjectString},\n{secondObjectString},\n{triObjectString},\n{cetObjectString},\n{petObjectString}\n]";
-                    string inputs = $"Data example:'{jsonString}', Description:'{Description}', Data Path:'{jsonFilePath}'";//task mora bit locen zarad py strukture
-
+                    string jsonString = $"[\n{firstObjectString},\n{secondObjectString}\n]";
+                    string inputs = $"EXAMPLE OF DATA FROM JSON FILE:'{jsonString}', DESCRIPTION:'{Description}', FILE PATH:'{jsonFilePath}'";//task mora bit locen zarad py strukture
+                    //dodaj collor picker
 
                     //prikaz tabele
                     TempData["JsonData"] = jsonString;

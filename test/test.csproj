@@ -21,5 +21,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\uploads\Video_Games.csv" />
     <Content Remove="wwwroot\uploads\Video_Games.json" />
+    <Content Remove="wwwroot\images\gender_distribution.png" />
+    <Content Remove="wwwroot\images\age_distribution.png" />
   </ItemGroup>
 </Project>

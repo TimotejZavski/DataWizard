@@ -45,12 +45,14 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
-context = f"You code in python using plotly, matplotlib, seaborn and pandas. Respond with only code inside ```python ``` with no comments. If user request is not specific, given:^({inputs}^)based on data example 1. analyze the structure of the data 2.look for trends and patterns in the data 3. save resulting png images to '{folder_path}'. Images should be name after what tile of chart. For collors use Monochromatic Blue Palette. Images will be showed on website with 'settings':width='800' height='600', make them high resolution, and clear, minimal."
-
-def zacasno():
-    st = "<div>TO JE ZNOTRAJ DIVA</div>"
-    return st
-
+context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'Monochromatic Blue Palette', RESOLUTION:1920x1080)
+1. Load the JSON data from the provided file path or string.
+2. Analyze the structure of the data and identify any trends or patterns(IF USER REQUEST IS NOT SPECIFIC).
+3. Use the specified color palette for the charts.
+4. Create the specified charts based on the analysis.
+5. On chart axis have to have a descriptions (legend)
+6. Save the charts as high-resolution PNG images to the '{folder_path}'.
+'''
 
 while True:
     if st <= 4:#3 krat lahka nardi napako
@@ -93,11 +95,9 @@ while True:
 
             #R1
             if result.returncode != 0:
-                error_message = result.stderr
-                print(f"R1:{skupek_imen}")#Error in python script execution: {error_message}
-                Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
-                st = st + 1
-
+                e = str(result.stderr)
+                print(f"R1:{skupek_imen}")#Error in python script execution: {e}
+                Task(e)
             else:
                 print(f"Python script executed successfully in {st} attempt")
                 break
@@ -105,19 +105,23 @@ while True:
         except subprocess.CalledProcessError as e:
             print(f"R2:{skupek_imen}")#Tryes:'{st}'.Python script crashed with error: '{e.stderr}'
             st = st + 1
-            Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
+            Task(str(e))
             #R3
         except Exception as e:
             print(f"R3:{skupek_imen}")#f"Tryes:'{st}'. An unexpected error occurred: '{e}'
             st = st + 1
-            Task = f"'{zacasno()}'+'{str(e)}' + 'generate code for only the rest of images that didn't get to be created by this code:'{response}', this images are already saved:'{skupek_imen()}'"
-            
+            Task(str(e))
+
     else:
 
         print(f"Attempts:'{st}'. Gave up at 4rd. imena\n:{skupek_imen()}")
         break
      
-
+def Task(e):
+    
+    task = f'''This code:'{response}, generated only this images:'{skupek_imen()}' and gave this error:'{str(e)}' generate code for only the rest of images that didn't get to be created by given code.'''
+    st = st + 1
+    return task
 
 #upload ciscenje-folder 
     #safety

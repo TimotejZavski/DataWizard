@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Palette Selector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      z-index: 1;
+    }
+
+    .dropdown-option {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .color-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+
+    .color-option-1 { background-color: #e74c3c; }
+    .color-option-2 { background-color: #27ae60; }
+    .color-option-3 { background-color: #f39c12; }
+    .color-option-4 { background-color: #3498db; }
+  </style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button class="dropdown-button" onclick="toggleDropdown()">Select Color Palette</button>
+  <div class="dropdown-content" id="colorDropdown">
+    <div class="dropdown-option" onclick="changeColor(1)">
+      <div class="color-icon color-option-1"></div> Option 1
+    </div>
+    <div class="dropdown-option" onclick="changeColor(2)">
+      <div class="color-icon color-option-2"></div> Option 2
+    </div>
+    <div class="dropdown-option" onclick="changeColor(3)">
+      <div class="color-icon color-option-3"></div> Option 3
+    </div>
+    <div class="dropdown-option" onclick="changeColor(4)">
+      <div class="color-icon color-option-4"></div> Option 4
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleDropdown() {
+    var dropdown = document.getElementById("colorDropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  function changeColor(option) {
+    var body = document.body;
+    body.className = ''; // Clear existing classes
+    body.classList.add('color-option-' + option);
+  }
+</script>
+
+</body>
+</html>

@@ -45,7 +45,7 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
-context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'Monochromatic Blue Palette', RESOLUTION:1920x1080)
+context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'Emerald Green Palette', RESOLUTION:1920x1080)
 1. Load the JSON data from the provided file path or string.
 2. Analyze the structure of the data and identify any trends or patterns(IF USER REQUEST IS NOT SPECIFIC).
 3. Use the specified color palette for the charts.
@@ -97,31 +97,28 @@ while True:
             if result.returncode != 0:
                 e = str(result.stderr)
                 print(f"R1:{skupek_imen}")#Error in python script execution: {e}
-                Task(e)
+                task = f'''This code:'{response}, generated only this images:'{skupek_imen()}' and gave this error:'{str(e)}' generate code for only the rest of images that didn't get to be created by given code.'''
+                st = st + 1 
             else:
                 print(f"Python script executed successfully in {st} attempt")
                 break
             #R2  
         except subprocess.CalledProcessError as e:
             print(f"R2:{skupek_imen}")#Tryes:'{st}'.Python script crashed with error: '{e.stderr}'
+            task = f'''This code:'{response}, generated only this images:'{skupek_imen()}' and gave this error:'{str(e)}' generate code for only the rest of images that didn't get to be created by given code.'''
             st = st + 1
-            Task(str(e))
             #R3
         except Exception as e:
             print(f"R3:{skupek_imen}")#f"Tryes:'{st}'. An unexpected error occurred: '{e}'
+            task = f'''This code:'{response}, generated only this images:'{skupek_imen()}' and gave this error:'{str(e)}' generate code for only the rest of images that didn't get to be created by given code.'''
             st = st + 1
-            Task(str(e))
 
     else:
 
         print(f"Attempts:'{st}'. Gave up at 4rd. imena\n:{skupek_imen()}")
         break
      
-def Task(e):
-    
-    task = f'''This code:'{response}, generated only this images:'{skupek_imen()}' and gave this error:'{str(e)}' generate code for only the rest of images that didn't get to be created by given code.'''
-    st = st + 1
-    return task
+
 
 #upload ciscenje-folder 
     #safety

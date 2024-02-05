@@ -17,6 +17,7 @@ with open('/Users/timzav/Desktop/DataWizard/config.json') as f:
 if len(sys.argv) > 1:
     inputs = ' '.join(sys.argv[1:])
     Task = ' '.join(sys.argv[-1:])
+    select_color = ' '.join(sys.argv[-1:])
 
 """manjka def tokens_in():"""#mora bit za not, ven in skupaj
 
@@ -26,7 +27,7 @@ def tokens_out(input_string, token_length=4):
         count += 1
     return count
 
-st = 1#za napake stet, kasnej break
+st = 0#za napake stet, kasnej break
 zacasen = ""# ce je napaka je to task
 
 #file names list
@@ -45,7 +46,7 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
-context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'Emerald Green Palette', RESOLUTION:1920x1080)
+context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'monochrome blue palettes', RESOLUTION:1920x1080)
 1. Load the JSON data from the provided file path or string.
 2. Analyze the structure of the data and identify any trends or patterns(IF USER REQUEST IS NOT SPECIFIC).
 3. Use the specified color palette for the charts.
@@ -78,7 +79,7 @@ while True:
         
         match = re.search(r"```(?:\bpython\b)?(.*?)```", response, re.DOTALL)
 
-        #pattern in string?
+        #pattern in string? #0
         if match:
             r_code = match.group(1)
         else:

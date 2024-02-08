@@ -46,14 +46,10 @@ def skupek_imen():
     return file_names_string
 
 folder_path = '/Users/timzav/Desktop/DataWizard/test/wwwroot/images/'
-context = f'''Respond with Python code only, no comments or explanations.Given: ({inputs}, COLLOR PALLETE:'monochrome blue palettes', RESOLUTION:1920x1080)
-1. Load the JSON data from the provided file path or string.
-2. Analyze the structure of the data and identify any trends or patterns(IF USER REQUEST IS NOT SPECIFIC).
-3. Use the specified color palette for the charts.
-4. Create the specified charts based on the analysis.
-5. On chart axis have to have a descriptions (legend)
-6. Save the charts as high-resolution PNG images to the '{folder_path}'.
-'''
+context = f'''Respond with code ONLY simple and plain Python code, no comments/explanations. Result of your code must always be generated png images/charts based on given:
+  {inputs}, COLLOR PALLETE of chart must be:'monochrome blue palettes', RESOLUTION of chart(png image) must be:1920x1080
+  Save the charts as high-resolution PNG images to the '{folder_path}'.
+  '''
 
 while True:
     if st <= 4:#3 krat lahka nardi napako

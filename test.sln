@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1706.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{1CA15B62-DB05-4398-BD88-ACE70AFE254F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataWizard", "test\DataWizard.csproj", "{1CA15B62-DB05-4398-BD88-ACE70AFE254F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

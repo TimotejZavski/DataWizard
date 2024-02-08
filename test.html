@@ -1,96 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color Palette Selector</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat UI</title>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f7f7f7;
     }
 
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    #chat-container {
+        width: 80%;
+        max-width: 600px;
+        height: 80%;
+        border: 1px solid #ddd;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .dropdown-button {
-      background-color: #3498db;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+    #message-area {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
     }
 
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
-      z-index: 1;
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        max-width: 60%;
+        min-width: auto;
     }
 
-    .dropdown-option {
-      display: flex;
-      align-items: center;
-      padding: 8px;
-      cursor: pointer;
+    .sender {
+        text-align: left;
     }
 
-    .color-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-      border-radius: 50%;
+    .receiver {
+        text-align: left;
+        margin-left: auto;
+        background-color: rgb(196, 196, 196);
     }
 
-    .color-option-1 { background-color: #e74c3c; }
-    .color-option-2 { background-color: #27ae60; }
-    .color-option-3 { background-color: #f39c12; }
-    .color-option-4 { background-color: #3498db; }
-  </style>
+    #input-area {
+        border-top: 1px solid #ddd;
+        padding: 10px;
+        display: flex;
+    }
+
+    #input-area input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    #input-area button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+
+    .image-container {
+        position: relative;
+    }
+
+    .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+    }
+
+        .fullscreen img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .first{
+          max-width: 100% !important;
+          background-color: #90c5ff !important;
+          text-align: center !important;
+        }
+
+        table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.table_p{
+  max-width: 100% !important;
+  min-width: 60% !important;
+
+}
+</style>
 </head>
 <body>
 
-<div class="dropdown">
-  <button class="dropdown-button" onclick="toggleDropdown()">Select Color Palette</button>
-  <div class="dropdown-content" id="colorDropdown">
-    <div class="dropdown-option" onclick="changeColor(1)">
-      <div class="color-icon color-option-1"></div> Option 1
+<div id="chat-container">
+    <div id="message-area">
+        <!-- Example chat message -->
+        <div class="message first">
+          <i>
+            1. Upload your file (.csv)<br>
+          </i>
+        </div>
+        <div class="message receiver">
+          moji_podatki.csv
+        </div>
+
+        <div class="message sender table_p">
+          vzorec podatkov:
+          <table>
+            <tr>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>TB</th>
+                <th>DB</th>
+                <th>Alkphos</th>
+                <th>Sgpt</th>
+                <th>Sgot</th>
+                <th>TP</th>
+                <th>ALB</th>
+                <th>A/G Ratio</th>
+                <th>Selector</th>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td>Female</td>
+                <td>0.7</td>
+                <td>0.1</td>
+                <td>187</td>
+                <td>16</td>
+                <td>18</td>
+                <td>6.8</td>
+                <td>3.3</td>
+                <td>0.9</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td>Male</td>
+                <td>10.9</td>
+                <td>5.5</td>
+                <td>699</td>
+                <td>64</td>
+                <td>100</td>
+                <td>7.5</td>
+                <td>3.2</td>
+                <td>0.74</td>
+                <td>1</td>
+            </tr>
+        </table>
+        </div>
+        
+
+        <div class="message first">
+          <i>
+            2. Describe data atributes and data structure<br>
+          </i>
+        </div>
+
+        <div class="message receiver">
+          The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not
+        </div>
+
+        <div class="message sender">
+          <b>Recomendation based on sample data and description</b>
+          <ul>
+            <li><strong>1. <a href="">Scatter plot</a>:</strong> Plot culmen length (x-axis) against culmen depth (y-axis) to visualize the relationship between these two features.</li>
+            <li><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</li>
+            <li><strong>3. <a href="">Bar chart</a>:</strong> Generate a bar chart to display the distribution of penguin sexes (male, female, and possibly missing values).</li>
+          </ul>
+          What would you like to generate?
+        </div>
+
+   
+            
+        <div class="message receiver">
+          <strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.
+        
+        </div>
+
+
+
+
+        <div class="message sender">
+          <div class="image-container">
+            Histogram of body mass distribution
+            <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png" alt="Image" width="100%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('@image.FileName')" />
+          </div> <br>
+          <div class="image-container">
+            Histogram of flipper length distribution
+            <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png" alt="Image" width="100%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('@image.FileName')" />
+          </div>
+        </div>
+        
+          
+        
+        <!-- Chat messages will appear here -->
     </div>
-    <div class="dropdown-option" onclick="changeColor(2)">
-      <div class="color-icon color-option-2"></div> Option 2
+    <div id="input-area">
+        <input type="text" placeholder="Type a message..." id="chat-input">
+        <button id="send-message">Send</button>
     </div>
-    <div class="dropdown-option" onclick="changeColor(3)">
-      <div class="color-icon color-option-3"></div> Option 3
-    </div>
-    <div class="dropdown-option" onclick="changeColor(4)">
-      <div class="color-icon color-option-4"></div> Option 4
-    </div>
-  </div>
 </div>
 
 <script>
-  function toggleDropdown() {
-    var dropdown = document.getElementById("colorDropdown");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  }
-
-  function changeColor(option) {
-    var body = document.body;
-    body.className = ''; // Clear existing classes
-    body.classList.add('color-option-' + option);
-  }
+    // JavaScript to handle sending messages would go here
 </script>
 
 </body>
 </html>
+<script>
+  function openFullScreen() {
+      const imageContainer = document.querySelector('.image-container');
+      const image = imageContainer.querySelector('img');
+
+      const fullscreenContainer = document.createElement('div');
+      fullscreenContainer.classList.add('fullscreen');
+
+      const fullscreenImage = document.createElement('img');
+      fullscreenImage.src = image.src;
+      fullscreenImage.alt = image.alt;
+
+      fullscreenContainer.appendChild(fullscreenImage);
+      document.body.appendChild(fullscreenContainer);
+
+      fullscreenContainer.addEventListener('click', closeFullScreen);
+  }
+
+  function closeFullScreen() {
+      const fullscreenContainer = document.querySelector('.fullscreen');
+      fullscreenContainer.remove();
+  }
+
+</script>

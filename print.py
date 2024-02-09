@@ -21,9 +21,13 @@ if len(sys.argv) > 1:
 
 """manjka def tokens_in():"""#mora bit za not, ven in skupaj
 
+def tokens_in(Task, context):
+    total_tokens = len(Task) + len(context)
+    return total_tokens // 4
+
 def tokens_out(input_string, token_length=4):
     count = 0
-    for i in range(0, len(input_string), token_length):
+    for _ in range(0, len(input_string), token_length):
         count += 1
     return count
 
@@ -113,6 +117,8 @@ while True:
     else:
 
         print(f"Attempts:'{st}'. Gave up at 4rd. imena\n:{skupek_imen()}")
+        print(f"token out:{tokens_out(response, token_length=4)}")
+        print(f"{tokens_in(Task, context)}")
         break
      
 

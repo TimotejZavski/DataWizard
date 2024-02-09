@@ -18,8 +18,8 @@ html {
 }
 
 body {
-    height: auto;
-    background: #e8f1ff;
+    height: 100vh !important;
+    background: #fefefe;
     margin-bottom: 60px;
 }
 

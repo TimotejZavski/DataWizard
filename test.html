@@ -1,258 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat UI</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f7f7f7;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Website</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
-    #chat-container {
-        width: 80%;
-        max-width: 600px;
-        height: 80%;
-        border: 1px solid #ddd;
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+.chat-container {
+  max-width: 900px;
+  margin: 50px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-    #message-area {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-    }
+.chat-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
 
-    .message {
-        margin-bottom: 15px;
-        padding: 10px;
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        max-width: 60%;
-        min-width: auto;
-    }
+.chat-messages {
+  padding: 10px;
+  height: 70vh;
+  overflow-y: scroll;
+}
 
-    .sender {
-        text-align: left;
-    }
+.sender-message {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
 
-    .receiver {
-        text-align: left;
-        margin-left: auto;
-        background-color: rgb(196, 196, 196);
-    }
+.receiver-message {
+  align-self: flex-start;
+  background-color: #f4f4f4;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
 
-    #input-area {
-        border-top: 1px solid #ddd;
-        padding: 10px;
-        display: flex;
-    }
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
 
-    #input-area input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-right: 10px;
-    }
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
 
-    #input-area button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-    }
+.chat-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.chat-input button:hover {
+  background-color: #0056b3;
+}
+    table {
+            width: auto; 
+            border-collapse: collapse; 
+            text-align: center; 
+        }
+        th, td {
+            border: 2px solid rgb(190, 217, 255);
+            padding: 1px; 
+        }
+        a{
+          text-decoration: none;
+        }
+        img{
+          border-radius: 5px;
+        }
 
-    .image-container {
-        position: relative;
-    }
-
-    .fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: zoom-out;
-    }
+        .fullscreen {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
         .fullscreen img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+          max-width: 90%;
+          max-height: 90%;
+          object-fit: contain;
         }
-        .first{
-          max-width: 100% !important;
-          background-color: #90c5ff !important;
-          text-align: center !important;
-        }
-
-        table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-.table_p{
-  max-width: 100% !important;
-  min-width: 60% !important;
-
-}
-</style>
+  </style>
 </head>
 <body>
-
-<div id="chat-container">
-    <div id="message-area">
-        <!-- Example chat message -->
-        <div class="message first">
-          <i>
-            1. Upload your file (.csv)<br>
-          </i>
-        </div>
-        <div class="message receiver">
-          moji_podatki.csv
-        </div>
-
-        <div class="message sender table_p">
-          vzorec podatkov:
-          <table>
-            <tr>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>TB</th>
-                <th>DB</th>
-                <th>Alkphos</th>
-                <th>Sgpt</th>
-                <th>Sgot</th>
-                <th>TP</th>
-                <th>ALB</th>
-                <th>A/G Ratio</th>
-                <th>Selector</th>
-            </tr>
-            <tr>
-                <td>65</td>
-                <td>Female</td>
-                <td>0.7</td>
-                <td>0.1</td>
-                <td>187</td>
-                <td>16</td>
-                <td>18</td>
-                <td>6.8</td>
-                <td>3.3</td>
-                <td>0.9</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>62</td>
-                <td>Male</td>
-                <td>10.9</td>
-                <td>5.5</td>
-                <td>699</td>
-                <td>64</td>
-                <td>100</td>
-                <td>7.5</td>
-                <td>3.2</td>
-                <td>0.74</td>
-                <td>1</td>
-            </tr>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>DataWizard 0.5v</h1>
+    </div>
+    <div class="chat-messages">
+      <div class="receiver-message">Upload your file (.csv)</div>
+      <div class="sender-message">moji_podatki.csv</div>
+      <div class="receiver-message">Data Sample:
+        <table>
+          <tr>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>TB</th>
+              <th>DB</th>
+              <th>Alkphos</th>
+              <th>Sgpt</th>
+              <th>Sgot</th>
+              <th>TP</th>
+              <th>ALB</th>
+              <th>A/G Ratio</th>
+              <th>Selector</th>
+          </tr>
+          <tr>
+              <td>65</td>
+              <td>Female</td>
+              <td>0.7</td>
+              <td>0.1</td>
+              <td>187</td>
+              <td>16</td>
+              <td>18</td>
+              <td>6.8</td>
+              <td>3.3</td>
+              <td>0.9</td>
+              <td>1</td>
+          </tr>
+          <tr>
+              <td>62</td>
+              <td>Male</td>
+              <td>10.9</td>
+              <td>5.5</td>
+              <td>699</td>
+              <td>64</td>
+              <td>100</td>
+              <td>7.5</td>
+              <td>3.2</td>
+              <td>0.74</td>
+              <td>1</td>
+          </tr>
         </table>
-        </div>
-        
-
-        <div class="message first">
-          <i>
-            2. Describe data atributes and data structure<br>
-          </i>
-        </div>
-
-        <div class="message receiver">
-          The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not
-        </div>
-
-        <div class="message sender">
-          <b>Recomendation based on sample data and description</b>
-          <ul>
-            <li><strong>1. <a href="">Scatter plot</a>:</strong> Plot culmen length (x-axis) against culmen depth (y-axis) to visualize the relationship between these two features.</li>
-            <li><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</li>
-            <li><strong>3. <a href="">Bar chart</a>:</strong> Generate a bar chart to display the distribution of penguin sexes (male, female, and possibly missing values).</li>
-          </ul>
-          What would you like to generate?
-        </div>
-
-   
+      </div>
+      <div class="receiver-message">Describe data atributes and data structure</div>
+      <div class="sender-message">The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not</div>
+      <div class="receiver-message">
+        <b>Recomendation based on sample data and description</b>
+        <ul>
+          <li><strong>1. <a href="">Scatter plot</a>:</strong> Plot culmen length (x-axis) against culmen depth (y-axis) to visualize the relationship between these two features.</li>
+          <li><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</li>
+          <li><strong>3. <a href="">Bar chart</a>:</strong> Generate a bar chart to display the distribution of penguin sexes (male, female, and possibly missing values).</li>
+        </ul>
+        What would you like to generate?
+      </div>
+            <div class="sender-message"><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</div>
+            <div class="receiver-message">
+              <div class="image-container">
+                Histogram of body mass distribution<br>
+                <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png')" />
+              </div> <br>
+              <div class="image-container">
+                Histogram of flipper length distribution<br>
+                <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png')" />
+              </div>
+            </div>
             
-        <div class="message receiver">
-          <strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.
-        
-        </div>
-
-
-
-
-        <div class="message sender">
-          <div class="image-container">
-            Histogram of body mass distribution
-            <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png" alt="Image" width="100%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('@image.FileName')" />
-          </div> <br>
-          <div class="image-container">
-            Histogram of flipper length distribution
-            <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png" alt="Image" width="100%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('@image.FileName')" />
+            
+            
+            
+            <!-- Add more messages with appropriate classes for sender or receiver -->
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Type your message..." disabled>
+            <button type="button">Send</button>
           </div>
         </div>
-        
-          
-        
-        <!-- Chat messages will appear here -->
-    </div>
-    <div id="input-area">
-        <input type="text" placeholder="Type a message..." id="chat-input">
-        <button id="send-message">Send</button>
-    </div>
-</div>
+      </body>
+      </html>
+      <script>
+        function openFullScreen(imageSrc) {
+            const fullscreenContainer = document.createElement('div');
+            fullscreenContainer.classList.add('fullscreen');
 
-<script>
-    // JavaScript to handle sending messages would go here
-</script>
+            const fullscreenImage = document.createElement('img');
+            fullscreenImage.src = imageSrc;
 
-</body>
-</html>
-<script>
-  function openFullScreen() {
-      const imageContainer = document.querySelector('.image-container');
-      const image = imageContainer.querySelector('img');
+            fullscreenContainer.appendChild(fullscreenImage);
+            document.body.appendChild(fullscreenContainer);
 
-      const fullscreenContainer = document.createElement('div');
-      fullscreenContainer.classList.add('fullscreen');
+            fullscreenContainer.addEventListener('click', closeFullScreen);
+        }
 
-      const fullscreenImage = document.createElement('img');
-      fullscreenImage.src = image.src;
-      fullscreenImage.alt = image.alt;
+        function closeFullScreen() {
+            const fullscreenContainer = document.querySelector('.fullscreen');
+            fullscreenContainer.remove();
+        }
 
-      fullscreenContainer.appendChild(fullscreenImage);
-      document.body.appendChild(fullscreenContainer);
-
-      fullscreenContainer.addEventListener('click', closeFullScreen);
-  }
-
-  function closeFullScreen() {
-      const fullscreenContainer = document.querySelector('.fullscreen');
-      fullscreenContainer.remove();
-  }
-
-</script>
+      </script>

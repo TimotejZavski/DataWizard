@@ -1,220 +1,191 @@
 ﻿@page
 @model test.Pages.AboutModel
 @{
+    @using Newtonsoft.Json
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Chat UI</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f0f0;
-            text-align:center;
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1200px;
+        margin-block: 2rem;
+        gap: 2rem;
+    }
+
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: clamp(20rem, calc(20rem + 2vw), 22rem);
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #fefffe;
+    }
+
+
+
+    .card__body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+        .card__body h4 {
+            font-size: 1.5rem;
+            text-transform: capitalize;
         }
 
-        #chat-container {
-            width: 80%;
-            max-width: 800px;
-            height: 70vh;
-            display: flex;
-            flex-direction: column;
-            background-color: #fff;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .card_table {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        overflow: hidden;
+        box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        background: #ECE9E6;
+    }
+
+    textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+        textarea::placeholder {
+            color: #999;
+            font-style: italic;
         }
 
-        #message-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: #fafafa;
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    /* Success Fade Styles */
+    .fade_success {
+        background-color: #c9ffe5;
+        border: 1px solid #09c97f;
+    }
+
+        .fade_success strong {
+            color: #2f9172;
         }
 
-        .message {
-            margin-bottom: 15px;
-            padding: 10px 20px;
-            background-color: #e9e9e9;
-            max-width: 60%;
-            word-wrap: break-word;
-            width: auto;
+    .fade_error {
+        background-color: #ffdbdb;
+        border: 1px solid #f95668;
+    }
+
+        .fade_error strong {
+            color: #f95668;
         }
 
-        .sender {
-            text-align: left;
-            background-color: #d1f4ff; /* Light blue for sender */
+
+
+    .fade_warning {
+        background-color: #fff0cc;
+        border: 1px solid #f8b15d;
+    }
+
+        .fade_warning strong {
+            color: #f8b15d;
         }
+</style>
 
-        .receiver {
-            text-align: left;
-            margin-left: auto;
-            background-color: #007bff; /* Slightly darker blue for receiver */
-            color: white; /* White text for receiver */
-        }
+<br />
+<br />
 
-        #input-area {
-            border-top: 1px solid #ddd;
-            padding: 30px;
-            display: flex;
-            background-color: #ffffff;
-            height: 50px;
-        }
+<br />
+<form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
 
-            #input-area input {
-                flex: 1;
-                padding: 10px;
-                border: 1px solid #ccc;
-                margin-right: 10px;
-                outline: none; /* Removes the default focus outline */
-            }
+    <div class="container">
+        <div class="card">
+            <div class="card__body">
+                <span class="tag tag-blue"><i class="fa fa-upload"></i> Upload</span>
+                <h4>Upload your .CSV file</h4>
 
-            #input-area button {
-                padding: 10px 20px;
-                border: none;
-                background-color: #007bff;
-                color: white;
-                cursor: pointer;
-                transition: background-color 0.2s ease; /* Adds a transition effect to button */
-            }
+                <input type="file" name="Upload" required><br /><br />
+            </div>
 
-                #input-area button:hover {
-                    background-color: #0056b3;
+        </div>
+        <div class="card">
+            <div class="card__body">
+                <span class="tag tag-brown"><i class="fa fa-fighter-jet"></i> Instructions</span>
+                <h4>Description & Task</h4>
+                <label>Description:</label>
+                <textarea name="Description" placeholder="Detailed description of data inside .csv.
+ex.
+1. column: description
+2. column: description
+Something data in 2_column is missing. Use actual column names and not like example." rows="8" required></textarea>
+                <label>Task:</label>
+                <textarea name="Task" placeholder="ex. Create bar and violin chart showing male/female ratio." rows="3" required></textarea>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card__body">
+                <span class="tag tag-red"><i style="font-size:20px" class="fa">&#xf29d; </i> Status</span>
+                <h4>Status of halucination</h4>
+                @if (TempData["Message"] != null || TempData["Message2"] != null || TempData["Message72"] != null)
+                {
+                    <p>@Html.Raw(TempData["Message"])</p>
+                    <p>@Html.Raw(TempData["Message2"])</p>
+                    <p>@Html.Raw(TempData["Message72"])</p>
                 }
-
-        /* Adding custom scrollbar */
-        #message-area::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        #message-area::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        #message-area::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-
-            #message-area::-webkit-scrollbar-thumb:hover {
-                background: #555;
-            }
-
-
-        /*table*/
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        .table_p {
-            max-width: 100% !important;
-        }
-    </style>
-</head>
-<body>
-    <div id="chat-container">
-        <div id="message-area">
-            <div class="message sender">Upload your file (.csv)</div>
-            <div class="message receiver">data.csv</div>
-            <div class="message sender table_p">
-                vzorec podatkov:
-                <table>
-                    <tr>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>TB</th>
-                        <th>DB</th>
-                        <th>Alkphos</th>
-                        <th>Sgpt</th>
-                        <th>Sgot</th>
-                        <th>TP</th>
-                        <th>ALB</th>
-                        <th>A/G Ratio</th>
-                        <th>Selector</th>
-                    </tr>
-                    <tr>
-                        <td>65</td>
-                        <td>Female</td>
-                        <td>0.7</td>
-                        <td>0.1</td>
-                        <td>187</td>
-                        <td>16</td>
-                        <td>18</td>
-                        <td>6.8</td>
-                        <td>3.3</td>
-                        <td>0.9</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>62</td>
-                        <td>Male</td>
-                        <td>10.9</td>
-                        <td>5.5</td>
-                        <td>699</td>
-                        <td>64</td>
-                        <td>100</td>
-                        <td>7.5</td>
-                        <td>3.2</td>
-                        <td>0.74</td>
-                        <td>1</td>
-                    </tr>
-                </table>
             </div>
-
-            <div class="message sender">Describe data atributes and data structure.</div><!--spremeni besedilo-->
-
-            <div class="message receiver">The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not</div>
-
-            <div class="message sender">
-                <b>Recomendation based on sample data and description</b>
-                <ul>
-                    <li><strong>1. <a href="">Scatter plot</a>:</strong> Plot culmen length (x-axis) against culmen depth (y-axis) to visualize the relationship between these two features.</li>
-                    <li><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</li>
-                    <li><strong>3. <a href="">Bar chart</a>:</strong> Generate a bar chart to display the distribution of penguin sexes (male, female, and possibly missing values).</li>
-                </ul>
-                What would you like to generate?
-            </div>
-
-            <div class="message receiver"><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</div>
-
-            <div class="message sender">
-                <div class="image-container">
-                    Histogram of body mass distribution
-                        </div> <br>
-                <div class="image-container">
-                    Histogram of flipper length distribution
-                          </div>
-            </div>
-            <!-- More messages go here -->
         </div>
-        <div id="input-area">
-            <input type="text" placeholder="Type a message..." id="chat-input">
-            <button id="send-message">Send</button>
-        </div>
+        <input type="submit" value="Cast the Spell" style="padding: 10px 20px; font-size: 16px; font-weight: bold; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+
     </div>
-</body>
-</html>
+    @if (TempData["Message"] != null)
+    {
+        var json = TempData["JsonData"] as string;
+        var data = JsonConvert.DeserializeObject<List<dynamic>>(json);
+        <h2>Content of file (sample) - 5 rows:</h2>
+        <div class="card_table" style="width: clamp(25rem, calc(20rem + 2vw));">
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        @foreach (var property in data[0].Properties())
+                        {
+                            <th>@property.Name</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in data)
+                    {
+                        <tr>
+                            @foreach (var property in item.Properties())
+                            {
+                                <td>@property.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-<script>function openFullScreen() {
-      const imageContainer = document.querySelector('.image-container');
-      const image = imageContainer.querySelector('img');
+        </div>
 
-      const fullscreenContainer = document.createElement('div');
-      fullscreenContainer.classList.add('fullscreen');
-
-      const fullscreenImage = document.createElement('img');
-      fullscreenImage.src = image.src;
-      fullscreenImage.alt = image.alt;
-
-      fullscreenContainer.appendChild(fullscreenImage);
-      document.body.appendChild(fullscreenContainer);
-
-      fullscreenContainer.addEventListener('click', closeFullScreen);
-  }
-
-  function closeFullScreen() {
-      const fullscreenContainer = document.querySelector('.fullscreen');
-      fullscreenContainer.remove();
-  }</script>
+    }
+</form>

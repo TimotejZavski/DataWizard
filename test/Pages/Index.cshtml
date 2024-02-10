@@ -6,19 +6,15 @@
 }
 
     <style>
-        body {
+        body, html {
             font-family: Arial, sans-serif;
-            height: 100vh;
             margin: 0;
             padding: 0;
         }
 
         .chat-container {
             max-width: 900px;
-            margin: 50px auto;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
         }
 
         .chat-header {
@@ -32,7 +28,7 @@
 
         .chat-messages {
             padding: 10px;
-            height: 70vh;
+            height: 85vh;
             overflow-y: scroll;
         }
 
@@ -59,6 +55,7 @@
             align-items: center;
             padding: 10px;
             border-top: 1px solid #ccc;
+
         }
 
             .chat-input input {
@@ -119,60 +116,51 @@
                 object-fit: contain;
             }
 
+
     </style>
 
     
 
     <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
         <div class="chat-container">
-            <div class="chat-header">
-                <h1>v0.6.1</h1>
-            </div>
             <div class="chat-messages">
                 <div class="receiver-message">Upload your file (.csv)</div>
-                <div class="sender-message">moji_podatki.csv</div>
+                <!--div class="sender-message">moji_podatki.csv</!--div>
                 <div class="receiver-message">
                     Data Sample:
                     <table>
-                        <tr>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>TB</th>
-                            <th>DB</th>
-                            <th>Alkphos</th>
-                            <th>Sgpt</th>
-                            <th>Sgot</th>
-                            <th>TP</th>
-                            <th>ALB</th>
-                            <th>A/G Ratio</th>
-                            <th>Selector</th>
-                        </tr>
-                        <tr>
-                            <td>65</td>
-                            <td>Female</td>
-                            <td>0.7</td>
-                            <td>0.1</td>
-                            <td>187</td>
-                            <td>16</td>
-                            <td>18</td>
-                            <td>6.8</td>
-                            <td>3.3</td>
-                            <td>0.9</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>62</td>
-                            <td>Male</td>
-                            <td>10.9</td>
-                            <td>5.5</td>
-                            <td>699</td>
-                            <td>64</td>
-                            <td>100</td>
-                            <td>7.5</td>
-                            <td>3.2</td>
-                            <td>0.74</td>
-                            <td>1</td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Culmen Length (mm)</th>
+                                <th>Culmen Depth (mm)</th>
+                                <th>Flipper Length (mm)</th>
+                                <th>Body Mass (g)</th>
+                                <th>Sex</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>39.1</td>
+                                <td>18.7</td>
+                                <td>181</td>
+                                <td>3750</td>
+                                <td>MALE</td>
+                            </tr>
+                            <tr>
+                                <td>39.5</td>
+                                <td>17.4</td>
+                                <td>186</td>
+                                <td>3800</td>
+                                <td>FEMALE</td>
+                            </tr>
+                            <tr>
+                                <td>40.3</td>
+                                <td>18</td>
+                                <td>195</td>
+                                <td>3250</td>
+                                <td>FEMALE</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="receiver-message">Describe data atributes and data structure</div>
@@ -196,16 +184,17 @@
                         Histogram of flipper length distribution<br>
                         <img src="~/images/flipper_lengths.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('~/images/flipper_lengths.png')" />
                     </div>
-                </div>
-
+                </div-->
 
 
 
                 <!-- Add more messages with appropriate classes for sender or receiver -->
             </div>
             <div class="chat-input">
-                <input type="text" placeholder="Type your message...">
-                <button type="button">Send</button>
+
+                <input type="file" id="file_input">
+                <input type="text" placeholder="Type your message..." id="text_input" hidden>
+                <button type="button" onclick="send()">Send</button>
             </div>
         </div>
 
@@ -245,8 +234,5 @@
         }
     </form>
 
-    <br>
-    <br>
-    <br>
 
 

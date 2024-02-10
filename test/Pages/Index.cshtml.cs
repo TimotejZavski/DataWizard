@@ -28,7 +28,7 @@ namespace test.Pages
         }
 
         public void OnGet()
-        {  
+        {
         }
         [BindProperty]
         public string Description { get; set; }
@@ -42,14 +42,14 @@ namespace test.Pages
         {
 
             if (Upload != null && Upload.Length > 0)
-            {   
+            {
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await Upload.CopyToAsync(stream);
-                    TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
-                    
+                    //TempData["Message"] = "<div class=\"alert fade_success .fade\"><strong>Success:</strong> File, description, and task Uploaded!</div>";
+
                 }
 
 
@@ -71,11 +71,11 @@ namespace test.Pages
 
                 //data extraction
                 string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
-                    JArray jsonArray = JArray.Parse(jsonFileContent);
+                JArray jsonArray = JArray.Parse(jsonFileContent);
 
-                    
+
                 if (jsonArray.Count > 0)
-                    {
+                {
                     //tabela
                     string firstObjectString = jsonArray[0].ToString();
                     string secondObjectString = jsonArray[1].ToString();
@@ -126,12 +126,12 @@ namespace test.Pages
 
                 }
                 else
-                    {
-                        Console.WriteLine("The JSON array is empty.");//zakaj je to tu
-                    }
+                {
+                    Console.WriteLine("The JSON array is empty.");//zakaj je to tu
+                }
 
 
-        // END run script
+                // END run script
             }
             else
             {
@@ -143,6 +143,12 @@ namespace test.Pages
 
         }
 
+        [HttpPost]
+        public string Test()
+        {
+            string ime = "hello";
+            return ime;
+        }
 
     }
 

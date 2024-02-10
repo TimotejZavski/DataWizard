@@ -14,12 +14,11 @@
 
 html {
   position: relative;
-  min-height: 100%;
+
 }
 
 body {
     height: 100vh !important;
     background: #fefefe;
-    margin-bottom: 60px;
 }
 

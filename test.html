@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>Chat Website</title>
   <style>
 body {
@@ -14,23 +15,21 @@ body {
 
 .chat-container {
   max-width: 900px;
-  margin: 50px auto;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  position: relative;
+        height: 100vh;
+
 }
 
 .chat-header {
   background-color: #007bff;
   color: white;
   padding: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .chat-messages {
   padding: 10px;
-  height: 70vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 
@@ -116,59 +115,52 @@ body {
 </head>
 <body>
   <div class="chat-container">
-    <div class="chat-header">
+    <!--div class="chat-header">
       <h1>DataWizard 0.5v</h1>
-    </div>
+    </div-->
     <div class="chat-messages">
       <div class="receiver-message">Upload your file (.csv)</div>
-      <div class="sender-message">moji_podatki.csv</div>
-      <div class="receiver-message">Data Sample:
+      <div class="sender-message"><i class="fas fa-arrow-left"></i> moji_podatki.csv</div>
+      <div class="receiver-message"><i class="fas fa-arrow-right"></i> Data Sample:
         <table>
-          <tr>
-              <th>Age</th>
-              <th>Gender</th>
-              <th>TB</th>
-              <th>DB</th>
-              <th>Alkphos</th>
-              <th>Sgpt</th>
-              <th>Sgot</th>
-              <th>TP</th>
-              <th>ALB</th>
-              <th>A/G Ratio</th>
-              <th>Selector</th>
-          </tr>
-          <tr>
-              <td>65</td>
-              <td>Female</td>
-              <td>0.7</td>
-              <td>0.1</td>
-              <td>187</td>
-              <td>16</td>
+          <thead>
+            <tr>
+              <th>Culmen Length (mm)</th>
+              <th>Culmen Depth (mm)</th>
+              <th>Flipper Length (mm)</th>
+              <th>Body Mass (g)</th>
+              <th>Sex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>39.1</td>
+              <td>18.7</td>
+              <td>181</td>
+              <td>3750</td>
+              <td>MALE</td>
+            </tr>
+            <tr>
+              <td>39.5</td>
+              <td>17.4</td>
+              <td>186</td>
+              <td>3800</td>
+              <td>FEMALE</td>
+            </tr>
+            <tr>
+              <td>40.3</td>
               <td>18</td>
-              <td>6.8</td>
-              <td>3.3</td>
-              <td>0.9</td>
-              <td>1</td>
-          </tr>
-          <tr>
-              <td>62</td>
-              <td>Male</td>
-              <td>10.9</td>
-              <td>5.5</td>
-              <td>699</td>
-              <td>64</td>
-              <td>100</td>
-              <td>7.5</td>
-              <td>3.2</td>
-              <td>0.74</td>
-              <td>1</td>
-          </tr>
+              <td>195</td>
+              <td>3250</td>
+              <td>FEMALE</td>
+            </tr>
+          </tbody>
         </table>
       </div>
-      <div class="receiver-message">Describe data atributes and data structure</div>
-      <div class="sender-message">The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not</div>
+      <div class="receiver-message"><i class="fas fa-arrow-right"></i> Describe data attributes and data structure</div>
+      <div class="sender-message"><i class="fas fa-arrow-left"></i> The dataset consists of 5 columns: 1. culmen_length_mm: culmen length (mm) 2. culmen_depth_mm: culmen depth (mm) 3. flipper_length_mm: flipper length (mm) 4. body_mass_g: body mass (g) 5. sex: penguin sex Some of sex columns are empty other are not</div>
       <div class="receiver-message">
-        <b>Recomendation based on sample data and description</b>
+        <b>Recommendation based on sample data and description</b>
         <ul>
           <li><strong>1. <a href="">Scatter plot</a>:</strong> Plot culmen length (x-axis) against culmen depth (y-axis) to visualize the relationship between these two features.</li>
           <li><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</li>
@@ -176,28 +168,23 @@ body {
         </ul>
         What would you like to generate?
       </div>
-            <div class="sender-message"><strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</div>
-            <div class="receiver-message">
-              <div class="image-container">
-                Histogram of body mass distribution<br>
-                <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png')" />
-              </div> <br>
-              <div class="image-container">
-                Histogram of flipper length distribution<br>
-                <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png')" />
-              </div>
-            </div>
-            
-            
-            
-            
-            <!-- Add more messages with appropriate classes for sender or receiver -->
-          </div>
-          <div class="chat-input">
-            <input type="text" placeholder="Type your message..." disabled>
-            <button type="button">Send</button>
-          </div>
-        </div>
+      <div class="sender-message"><i class="fas fa-arrow-left"></i> <strong>2. <a href="">Histogram</a>:</strong> Create histograms for flipper length and body mass to observe their distributions.</div>
+      <div class="receiver-message">
+
+        <i class="fas fa-arrow-right"></i>        Histogram of body mass distribution<br>
+          <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/body_masses.png')" />
+<br>
+
+          Histogram of flipper length distribution<br>
+          <img src="/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png" alt="Image" width="60%" height="auto" style="object-fit: cover; cursor: zoom-in;" onclick="openFullScreen('/Users/timzav/Desktop/datasets/data/pingvini/images/flipper_lengths.png')" />
+
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="Type your message...">
+      <button type="button">Send</button>
+    </div>
+  </div>
       </body>
       </html>
       <script>

@@ -6,6 +6,7 @@ import sys
 import os
 import glob
 import time
+import tiktoken
 
 #api
 with open('/Users/timzav/Desktop/DataWizard/config.json') as f:

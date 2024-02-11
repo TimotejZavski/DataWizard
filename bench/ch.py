@@ -6,10 +6,13 @@ import sys
 import os
 import glob
 import time
+import tiktoken
 
 
-kljuc = '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'
-client = OpenAI(api_key=kljuc)
+with open('/Users/timzav/Desktop/DataWizard/config.json') as f:
+    config = json.load(f)
+    kljuc = config['API_KEY']
+    client = OpenAI(api_key=kljuc)
 context = '''
 To this message respond with code ONLY. Code should be simple and to the point in Python language. Point of the code is chart(s)/grapf(s) generation in form of PNG(image).  Code/your whole response that you generate should be inside ```python ```, for example: 
 ```python 
@@ -62,44 +65,52 @@ RESOLUTION (of chart/png image
   1920x1080
 Save the charts as high-resolution PNG images to the '/Users/timzav/Desktop/zacasno/'.
 '''
-Task = '''Histogram for Price Distribution: Display the distribution of house prices to understand the price range. '''
+Task = '''Generate a bar chart of the number of houses for sale in each state. '''
 
-
+def num_tokens_from_string(string: str, encoding_name: str) -> int:
+  """Returns the number of tokens in a text string."""
+  encoding = tiktoken.get_encoding(encoding_name)
+  num_tokens = len(encoding.encode(string))
+  return num_tokens
 
 while True:
-        response = client.chat.completions.create(
-            model="gpt-4-1106-preview", 
-            messages=[
-                {"role": "system", "content": context},
-                {"role": "user", "content": Task}
-            ]
-        )
-        response = response.choices[0].message.content
+    response = client.chat.completions.create(
+      model="gpt-4-1106-preview", 
+      messages=[
+        {"role": "system", "content": context},
+        {"role": "user", "content": Task}
+      ]
+    )
+    response = response.choices[0].message.content
 
-        print("Response je tukaj.")
+    print("Response je tukaj.")
 
-        def overwrite_file(file_path, new_content):
-            with open(file_path, 'w') as file:
-                file.write(new_content)
+    def overwrite_file(file_path, new_content):
+      with open(file_path, 'w') as file:
+        file.write(new_content)
 
-        file_path = "t.py"
-        match = re.search(r"```(?:\bpython\b)?(.*?)```", response, re.DOTALL)
+    file_path = "/Users/timzav/Desktop/DataWizard/bench/t.py"
+    match = re.search(r"```(?:\bpython\b)?(.*?)```", response, re.DOTALL)
 
-        #vse mora bit tukaj not
-        if match:
-            new_content = r_code = match.group(1)
+    #vse mora bit tukaj not
+    if match:
+      new_content = r_code = match.group(1)
 
-            overwrite_file(file_path, new_content)
-            
-            try:
-                result = subprocess.run(["python", "/Users/timzav/Desktop/t.py"], capture_output=True, text=True)
-                error_message = result.stderr
-            except subprocess.CalledProcessError as e:
-                error_message = str(e)
-                Task = f"Error in python script execution: {error_message}"
-                continue
-            
-            print(response)
-            Task = input()
-        else:
-            print("Napaka No python code found.")
+      overwrite_file(file_path, new_content)
+      
+      try:
+        result = subprocess.run(["python", file_path], capture_output=True, text=True)  # Run the Python script
+        error_message = result.stderr
+      except subprocess.CalledProcessError as e:
+        error_message = str(e)
+        Task = f"Error in python script execution: {error_message}"
+        continue
+      
+      print(response)
+      print(num_tokens_from_string(context+Task, "cl100k_base"))
+      print(num_tokens_from_string(response, "cl100k_base"))
+      Task = input()
+    else:
+      print("Napaka No python code found.")
+
+

@@ -1,29 +1,39 @@
 
 import json
 import matplotlib.pyplot as plt
+from collections import defaultdict
 
-# Load data from the JSON file
-with open('/Users/timzav/Desktop/datasets/data/new_york/use_me.json') as json_file:
-    data = json.load(json_file)
+# Load the data from the JSON file
+file_path = '/Users/timzav/Desktop/datasets/data/new_york/use_me.json'
 
-# Extract relevant data
-prices = [int(item["PRICE"]) for item in data if item["PRICE"].isdigit()]
-properties = [item["MAIN_ADDRESS"] for item in data]
+# Read the JSON file
+with open(file_path, 'r') as file:
+    data = json.load(file)
 
-# Generate a bar chart
-plt.figure(figsize=(1920/96, 1080/96), dpi=96)
-plt.bar(properties, prices, color='lightblue')
+# Create a dictionary for type and prices
+type_prices = defaultdict(list)
 
-# Rotate the x-axis labels for better visibility
-plt.xticks(rotation=90, ha='right', fontsize=8)
+# Populate the dictionary with type and prices
+for item in data:
+    type_prices[item['TYPE']].append(int(item['PRICE']))
 
-# Set chart title and labels
-plt.title('Property Prices in New York', fontsize=18)
-plt.xlabel('Property', fontsize=14)
-plt.ylabel('Price ($)', fontsize=14)
+# Calculate average price per type
+average_prices = {house_type: sum(prices) / len(prices) for house_type, prices in type_prices.items()}
 
-# Save the chart as a high-resolution PNG image
-plt.tight_layout()
-plt.savefig('/Users/timzav/Desktop/zacasno/new_york_property_prices.png', format='png', dpi=300)
+# Data for plotting
+types = list(average_prices.keys())
+avg_prices = list(average_prices.values())
 
-plt.show()
+# Plot
+plt.figure(figsize=(19.20, 10.80))
+plt.bar(types, avg_prices, color='lightblue')
+
+plt.xlabel('Type of House')
+plt.ylabel('Average Price ($)')
+plt.title('Average Price per Type of House')
+plt.xticks(rotation=45, ha='right')
+
+# Save the plot as a PNG image
+output_file_path = '/Users/timzav/Desktop/zacasno/average_price_per_type.png'
+plt.savefig(output_file_path, format='png', dpi=100)
+plt.close()

@@ -23,14 +23,18 @@ if len(sys.argv) > 1:
 """manjka def tokens_in():"""#mora bit za not, ven in skupaj
 
 def tokens_in(Task, context):
-    total_tokens = len(Task) + len(context)
-    return total_tokens // 4
+    total_tokens = count_tokens(Task + context)
+    return total_tokens
 
 def tokens_out(input_string, token_length=4):
     count = 0
     for _ in range(0, len(input_string), token_length):
         count += 1
     return count
+
+def count_tokens(input_string):
+    total_tokens = tiktoken.count_tokens(input_string)
+    return total_tokens
 
 st = 0#za napake stet, kasnej break
 zacasen = ""# ce je napaka je to task

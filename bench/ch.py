@@ -65,7 +65,7 @@ RESOLUTION (of chart/png image
   1920x1080
 Save the charts as high-resolution PNG images to the '/Users/timzav/Desktop/zacasno/'.
 '''
-Task = '''Generate a bar chart of the number of houses for sale in each state. '''
+Task = '''Generate a bar chart of average price per specific type of house.'''
 
 def num_tokens_from_string(string: str, encoding_name: str) -> int:
   """Returns the number of tokens in a text string."""

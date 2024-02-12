@@ -30,6 +30,7 @@ namespace test.Pages
         public void OnGet()
         {
         }
+
         [BindProperty]
         public string Description { get; set; }
 
@@ -144,11 +145,89 @@ namespace test.Pages
         }
 
         [HttpPost]
-        public string Test()
+        public IActionResult OnPostTest(string ime)
         {
-            string ime = "hello";
-            return ime;
+            string ime2 = "hello";
+            return new JsonResult(ime2);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> OnPostUploadAsync([FromBody] IFormFile? Upload)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", Upload.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await Upload.CopyToAsync(stream);
+               
+            }
+
+
+            // Convert CSV to JSON
+            var csvFilePath = filePath;  // Assuming Uploaded file is a CSV
+            var jsonFilePath = Path.ChangeExtension(filePath, ".json");  // Change extension to .json
+
+            using (var reader = new StreamReader(csvFilePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<dynamic>().ToList();
+
+                // Serialize to JSON
+                var json = JsonConvert.SerializeObject(records, Formatting.Indented);
+
+                // Write JSON to file
+                System.IO.File.WriteAllText(jsonFilePath, json);
+            }
+
+            //data extraction
+            string jsonFileContent = System.IO.File.ReadAllText(jsonFilePath);
+            JArray jsonArray = JArray.Parse(jsonFileContent);
+
+
+            if (jsonArray.Count > 0)
+            {
+                //tabela
+                string firstObjectString = jsonArray[0].ToString();
+                string secondObjectString = jsonArray[1].ToString();
+                //string triObjectString = jsonArray[1].ToString();
+                //string cetObjectString = jsonArray[1].ToString();
+                //string petObjectString = jsonArray[1].ToString();
+
+                string jsonString = $"[\n{firstObjectString},\n{secondObjectString}\n]";
+                string inputs = $"EXAMPLE OF DATA FROM JSON FILE:'{jsonString}', DESCRIPTION:'{Description}', FILE PATH:'{jsonFilePath}'";//task mora bit locen zarad py strukture
+                                                                                                                                          //dodaj collor picker
+                return new JsonResult(jsonString); }
+             else
+                {
+                    string x  = ("The JSON array is empty.");//zakaj je to tu
+                    return new JsonResult(x);
+                }
+           
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
